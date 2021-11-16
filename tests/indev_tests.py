@@ -1,7 +1,15 @@
-from base_classes.particle import Particle
+import numpy
+from base_classes.Particle import Particle
 
-particle_1 = Particle(name="particle_1")
-print(particle_1)
+test1args = dict(
+    position=numpy.array([0, 100, 0], dtype=float),
+    velocity=numpy.array([0, 10, 0], dtype=float),
+    acceleration=numpy.array([0, -10, 0], dtype=float),
+    name="Ball",
+    mass=500.0
+)
+Ball = Particle(**test1args)
+print(Ball)
 for i in range(5):
-    particle_1.update(0.1)
-    print(particle_1)
+    Ball.update(0.1)
+print(Ball)
