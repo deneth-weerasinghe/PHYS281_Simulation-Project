@@ -22,11 +22,15 @@ class Particle:
 
         self.name = name
         self.mass = mass
-        self.position = position
-        self.velocity = velocity
-        self.acceleration = acceleration
+        self.position = np.array(position, dtype=float)
+        self.velocity = np.array(velocity, dtype=float)
+        self.acceleration = np.array(acceleration, dtype=float)
 
     def __str__(self):
         return "Particle: {0}, Mass: {1:.3e}, Position: {2}, Velocity: {3}, Acceleration: {4}".format(
             self.name, self.mass, self.position, self.velocity, self.acceleration
         )
+
+    def update(self, deltaT):
+        self.position += self.velocity * deltaT
+        self.velocity += self.acceleration * deltaT
