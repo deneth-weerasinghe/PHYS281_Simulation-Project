@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 from base_classes.Particle import Particle
 
 earthMass = 5.97237e24  # https://en.wikipedia.org/wiki/Earth
@@ -23,7 +24,9 @@ Satellite = Particle(
 t = 0
 delta_T = 6
 
-for i in range(0, 2000):
+Data = []
+
+for i in range(1, 2001):
 
     t += delta_T
 
@@ -32,4 +35,9 @@ for i in range(0, 2000):
 
     Earth.update(delta_T)
     Satellite.update(delta_T)
+
+    if (i - 1) % 100 == 0:  # which values of i should be used to store data
+        Data.append([t, copy.deepcopy(Earth), copy.deepcopy(Satellite)])
+
+np.save("TwoBodyTest", Data, allow_pickle=True)
 
