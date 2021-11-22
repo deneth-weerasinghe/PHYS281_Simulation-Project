@@ -55,10 +55,11 @@ class Particle:
         """
 
         relativePosition = self.position - body.position
-        scalarDistance = np.linalg.norm(relativePosition)
-        g = - (G * body.mass)/(scalarDistance ** 2) * 1
+        scalarDistance = np.linalg.norm(self.position - body.position)
+        g = - ((Particle.G * body.mass) / (scalarDistance ** 2)) * self.getUnitVector(relativePosition)
+        self.acceleration = g
 
     @staticmethod
     def getUnitVector(a):
-        return a / np.linalg.norm(a)
+        return np.array(a / np.linalg.norm(a), dtype=float)
 
