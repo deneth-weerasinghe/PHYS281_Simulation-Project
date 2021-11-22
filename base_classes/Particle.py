@@ -8,7 +8,7 @@ class Particle:
     :cvar G: gravitational constant
     """
 
-    G = 6.67408E-11
+    G = 6.67408E-11  # units: m^3 kg^-1 s^-2
 
     def __init__(self,
                  position=np.array([0, 0, 0], dtype=float),
@@ -40,5 +40,25 @@ class Particle:
         )
 
     def update(self, deltaT):
+        """
+        Updates position of object based on its velocity
+
+        :param deltaT: time interval
+        """
         self.position += self.velocity * deltaT
         self.velocity += self.acceleration * deltaT
+
+    def updateGravitationalAcceleration(self, body):
+        """
+        Updates acceleration of object based on the gravitational field induced by another object
+        :param body: the other object that influences the gravitational acceleration
+        """
+
+        relativePosition = self.position - body.position
+        scalarDistance = np.linalg.norm(relativePosition)
+        g = - (G * body.mass)/(scalarDistance ** 2) * 1
+
+    @staticmethod
+    def getUnitVector(a):
+        return a / np.linalg.norm(a)
+
