@@ -18,7 +18,7 @@ class Particle:
                  mass=1.0
                  ):
         """
-        Instance constructor
+        Constructor
 
         :param position: position of particle at t=0; 3D vector as a numpy array
         :param velocity: velocity of particle at t=0; 3D vector as a numpy array
@@ -56,10 +56,15 @@ class Particle:
 
         relativePosition = self.position - body.position
         scalarDistance = np.linalg.norm(self.position - body.position)
-        g = - ((Particle.G * body.mass) / (scalarDistance ** 2)) * self.getUnitVector(relativePosition)
+        g = - ((Particle.G * body.mass) / (scalarDistance ** 2)) * Particle.getUnitVector(relativePosition)
         self.acceleration = g
 
     @staticmethod
     def getUnitVector(a):
+        """
+        Takes a vector as argument and returns its unit vector
+        :param a: vector to extract direction from
+        :return: a unit vector in the same direction as :param a
+        """
         return np.array(a / np.linalg.norm(a), dtype=float)
 

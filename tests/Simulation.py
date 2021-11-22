@@ -26,7 +26,7 @@ delta_T = 6
 
 Data = []
 
-for i in range(1, 2001):
+for i in range(1, 200001):
 
     t += delta_T
 
@@ -36,7 +36,7 @@ for i in range(1, 2001):
     Earth.update(delta_T)
     Satellite.update(delta_T)
 
-    if (i - 1) % 100 == 0:  # which values of i should be used to store data
+    if (i - 1) % 100 == 0:  # which values of i should be considered when storing data
         Data.append([t, copy.deepcopy(Earth), copy.deepcopy(Satellite)])
 
 np.save("TwoBodyTest", Data, allow_pickle=True)
