@@ -1,5 +1,4 @@
-from tests.Simulation import *
-from os import path
+import numpy as np
 
 
 def print_particle(particle):
@@ -10,15 +9,11 @@ def print_particle(particle):
                                 particle.__getattribute__(attribute) + 0.0))  # add 0.0 to avoid negative zeros!
 
 
-print("The Earth and Satellites Location after {0} seconds is:".format((2000 * 6)))
-print_particle(Earth)
-print_particle(Satellite)
-if path.exists("TwoBodyTest.npy"):
-    print("The file TwoBodyTest.npy has been created.")
+print("Testing reading the file TwoBodyTest.npy that you have loaded")
 
-print("testing reading it back in")
+float_formatter = lambda x: "%.5e" % x
+np.set_printoptions(formatter={'float_kind': float_formatter})
 DataIn = np.load("TwoBodyTest.npy", allow_pickle=True)
-
 print("Printing First Entry")
 print("{}".format(int(DataIn[0][0])))  # time
 print_particle(DataIn[0][1])  # Earth

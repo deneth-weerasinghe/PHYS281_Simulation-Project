@@ -1,17 +1,14 @@
 import numpy as np
-from base_classes.Particle import Particle
 
-# print(Particle.getUnitVector(np.array([1, 2, 3])))
+DataIn = np.load("TwoBodyTest.npy", allow_pickle=True)
 
-particle_1 = Particle(position=np.array([0, 10, 0]))
-particle_2 = Particle(position=np.array([0, 0, 0]))
 
-particle_2.updateGravitationalAcceleration(particle_1)
+print("Testing reading the file TwoBodyTest.npy  that you have loaded")
 
-print("The Earth and Satellites Location after {0} seconds is:".format((2000 * 6)))
-for particle in [Earth, Satellite]:
-    print("  Particle: {}".format(particle.name))
-    print("    Mass: {0:.3e}, ".format(particle.mass))
-    for attribute in ["position", "velocity", "acceleration"]:
-        print("    {}: {}".format(attribute,
-                                  particle.__getattribute__(attribute) + 0.0))  # add 0.0 to avoid negative zeros!
+print("Printing Kinetic Energy of First Entry Earth and Satellite")
+print("Earth KE: {:.5e}".format(DataIn[0][1].kineticEnergy()))
+print("Satellite KE: {:.5e}".format(DataIn[0][2].kineticEnergy()))
+
+print("Printing Kinetic Energy of Last Entry")
+print("Earth KE: {:.5e}".format(DataIn[-1][1].kineticEnergy()))
+print("Satellite KE: {:.5e}".format(DataIn[-1][2].kineticEnergy()))

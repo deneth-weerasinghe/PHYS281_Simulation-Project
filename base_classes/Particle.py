@@ -59,6 +59,14 @@ class Particle:
         g = - ((Particle.G * body.mass) / (scalarDistance ** 2)) * Particle.getUnitVector(relativePosition)
         self.acceleration = g
 
+    def kineticEnergy(self):
+        """
+        Calculates and returns the kinetic energy of the particle
+        :return: kinetic energy
+        """
+        e_k = 0.5 * self.mass * np.linalg.norm(self.velocity) ** 2
+        return e_k
+
     @staticmethod
     def getUnitVector(a):
         """
