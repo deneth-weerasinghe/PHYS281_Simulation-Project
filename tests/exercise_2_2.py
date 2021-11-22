@@ -1,4 +1,4 @@
-from simulations.Simulation import *
+from tests.Simulation import *
 from os import path
 
 
