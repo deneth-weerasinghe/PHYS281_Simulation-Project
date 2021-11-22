@@ -2,6 +2,13 @@ import numpy as np
 
 
 class Particle:
+    """
+    Class constants
+
+    :cvar G: gravitational constant
+    """
+
+    G = 6.67408E-11
 
     def __init__(self,
                  position=np.array([0, 0, 0], dtype=float),
@@ -11,7 +18,7 @@ class Particle:
                  mass=1.0
                  ):
         """
-        Instance initialisation method.
+        Instance constructor
 
         :param position: position of particle at t=0; 3D vector as a numpy array
         :param velocity: velocity of particle at t=0; 3D vector as a numpy array
@@ -20,9 +27,10 @@ class Particle:
         :param mass: mass of particle; assume no relativistic effects on mass
         """
 
+        # class variables
         self.name = name
         self.mass = mass
-        self.position = np.array(position, dtype=float)
+        self.position = np.array(position, dtype=float)  # Copies input array and converts all elements into floats
         self.velocity = np.array(velocity, dtype=float)
         self.acceleration = np.array(acceleration, dtype=float)
 
