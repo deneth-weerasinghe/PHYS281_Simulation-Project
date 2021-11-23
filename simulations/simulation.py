@@ -24,9 +24,15 @@ Satellite = Particle(
 t = 0
 delta_T = 6
 
-Data = []
+Data = []  # list to store contents that will be written to "TwoBodyTest.npy"#
+
+times = []  # list storing values for the time (x axis) of the plot
+positions = []  # list storing values for the position (y axis) of the satellite
 
 for i in range(1, 200001):
+
+    times.append(t)
+    positions.append(Satellite.position)
 
     t += delta_T
 
@@ -39,5 +45,4 @@ for i in range(1, 200001):
     if (i - 1) % 100 == 0:  # which values of i should be considered when storing data
         Data.append([t, copy.deepcopy(Earth), copy.deepcopy(Satellite)])
 
-np.save("TwoBodyTest", Data, allow_pickle=True)
-
+# np.save("TwoBodyTest", Data, allow_pickle=True)
