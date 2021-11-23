@@ -1,6 +1,9 @@
 import numpy as np
 import os
 
+parent_dir = os.path.dirname(os.getcwd())
+file_path = os.path.join(parent_dir, "data_files/TwoBodyTest.npy")
+
 
 def print_particle(particle):
     print("Particle: {}".format(particle.name))
@@ -11,9 +14,6 @@ def print_particle(particle):
 
 
 print("Testing reading the file TwoBodyTest.npy that you have loaded")
-
-file_path = os.getcwd()
-file_path = file_path.replace("tests", "data_files/TwoBodyTest.npy")
 
 float_formatter = lambda x: "%.5e" % x
 np.set_printoptions(formatter={'float_kind': float_formatter})

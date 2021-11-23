@@ -1,11 +1,8 @@
 from simulations.simulation import *
 from os import path
 
-
-relative_path = os.getcwd()
-new_path = relative_path.replace("tests", "data_files")
-os.chdir(new_path)
-print(os.getcwd())
+parent_dir = os.path.dirname(os.getcwd())
+file_path = os.path.join(parent_dir, "data_files/TwoBodyTest.npy")
 
 
 def print_particle(particle):
@@ -20,11 +17,11 @@ print("The Earth and Satellites Location after {0} seconds is:".format((2000 * 6
 print_particle(Earth)
 print_particle(Satellite)
 
-if path.exists("TwoBodyTests.npy"):
+if path.exists(file_path):
     print("The file TwoBodyTest.npy has been created.")
 
 print("testing reading it back in")
-DataIn = np.load("TwoBodyTest.npy", allow_pickle=True)
+DataIn = np.load(file_path, allow_pickle=True)
 
 print("Printing First Entry")
 print("{}".format(int(DataIn[0][0])))  # time
