@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 
 def print_particle(particle):
@@ -11,9 +12,12 @@ def print_particle(particle):
 
 print("Testing reading the file TwoBodyTest.npy that you have loaded")
 
+file_path = os.getcwd()
+file_path = file_path.replace("tests", "data_files/TwoBodyTest.npy")
+
 float_formatter = lambda x: "%.5e" % x
 np.set_printoptions(formatter={'float_kind': float_formatter})
-DataIn = np.load("TwoBodyTest.npy", allow_pickle=True)
+DataIn = np.load(file_path, allow_pickle=True)
 print("Printing First Entry")
 print("{}".format(int(DataIn[0][0])))  # time
 print_particle(DataIn[0][1])  # Earth

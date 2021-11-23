@@ -1,6 +1,10 @@
 import numpy as np
+import os
 
-DataIn = np.load("TwoBodyTest.npy", allow_pickle=True)
+file_path = os.getcwd()
+file_path = file_path.replace("tests", "data_files/TwoBodyTest.npy")
+
+DataIn = np.load(file_path, allow_pickle=True)
 
 
 print("Testing reading the file TwoBodyTest.npy  that you have loaded")

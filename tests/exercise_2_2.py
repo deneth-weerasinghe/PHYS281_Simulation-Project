@@ -2,6 +2,12 @@ from simulations.simulation import *
 from os import path
 
 
+relative_path = os.getcwd()
+new_path = relative_path.replace("tests", "data_files")
+os.chdir(new_path)
+print(os.getcwd())
+
+
 def print_particle(particle):
     print("Particle: {}".format(particle.name))
     print("  Mass: {0:.3e}, ".format(particle.mass))
@@ -13,7 +19,8 @@ def print_particle(particle):
 print("The Earth and Satellites Location after {0} seconds is:".format((2000 * 6)))
 print_particle(Earth)
 print_particle(Satellite)
-if path.exists("TwoBodyTest.npy"):
+
+if path.exists("TwoBodyTests.npy"):
     print("The file TwoBodyTest.npy has been created.")
 
 print("testing reading it back in")

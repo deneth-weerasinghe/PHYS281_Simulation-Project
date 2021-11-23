@@ -1,5 +1,6 @@
 import numpy as np
 import copy
+import os
 from base_classes.Particle import Particle
 
 earthMass = 5.97237e24  # https://en.wikipedia.org/wiki/Earth
@@ -45,4 +46,9 @@ for i in range(1, 200001):
     if (i - 1) % 100 == 0:  # which values of i should be considered when storing data
         Data.append([t, copy.deepcopy(Earth), copy.deepcopy(Satellite)])
 
-# np.save("TwoBodyTest", Data, allow_pickle=True)
+relative_path = os.getcwd()
+new_path = relative_path.replace("simulations", "data_files")
+new_path = relative_path.replace("tests", "data_files")
+os.chdir(new_path)
+
+np.save("TwoBodyTest", Data, allow_pickle=True)
