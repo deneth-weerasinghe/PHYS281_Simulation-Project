@@ -2,6 +2,7 @@ import numpy as np
 import copy
 import os
 from base_classes.Particle import Particle
+from base_classes.SimpleGraphPlot import SimpleGraphPlot
 
 new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
 
@@ -25,17 +26,14 @@ Satellite = Particle(
 )
 
 t = 0
-delta_T = 6
+delta_T = 1000
 
 Data = []  # list to store contents that will be written to "TwoBodyTest.npy"#
 
 times = []  # list storing values for the time (x axis) of the plot
 positions = []  # list storing values for the position (y axis) of the satellite
 
-for i in range(1, 2001):
-
-    times.append(t)
-    positions.append(Satellite.position)
+for i in range(1, 20001):
 
     t += delta_T
 
@@ -48,12 +46,22 @@ for i in range(1, 2001):
     if (i - 1) % 100 == 0:  # which values of i should be considered when storing data
         Data.append([t, copy.deepcopy(Earth), copy.deepcopy(Satellite)])
 
-np.save(new_path + "/TwoBodyTest", Data, allow_pickle=True)
+        times.append(t)
+        positions.append(Satellite.position.copy())
 
-for n, i in enumerate(positions):
-    f = open(new_path + "/test_data.txt", "w+")
-    f.write("# t x y\n")
-    to_save = [times[n], i[0], i[1]]
-    # print(to_save)
-    np.savetxt(f, to_save)
-# simple_graph_plot.draw2DPositionGraph(positions)
+for i in positions:
+    print(i)
+
+# for n, i in enumerate(positions):
+# print(times[n], i)
+# f = open(new_path + "/test_data.txt", "w+")
+# f.write("# t x y\n")
+# to_save = [times[n], i]
+# print(to_save)
+# np.savetxt(f, to_save)
+
+x_y_graph = SimpleGraphPlot(times, positions)
+
+x_y_graph.draw2DPositionGraph()
+
+# np.save(new_path + "/TwoBodyTest", Data, allow_pickle=True)
