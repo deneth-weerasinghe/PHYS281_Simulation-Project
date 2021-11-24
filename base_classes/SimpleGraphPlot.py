@@ -15,25 +15,20 @@ class SimpleGraphPlot:
         self.z = extracted_z
 
     def drawTimeXGraph(self):
-        plt.plot(self.times, self.x, "-r", label='trajectory')
+        """
+        Draws the particle's x-position as a function of time
+        """
+        plt.plot(self.times, self.x, "-r", label='x-component')
         plt.xlabel('time (s)')
         plt.ylabel('position')
         plt.legend()
         plt.show()
 
     def draw2DPositionGraph(self):
-        scatter_colour = None
-        division = int(len(self.x) / 4)
-
-        # for i in range(0, len(self.x)):
-        #     if 0 <= i < (division * 1):
-        #         scatter_colour = "r"
-        #     elif (division * 1) <= i < (division * 2):
-        #         scatter_colour = "o"
-        #     elif (division * 2) <= i < (division * 3):
-        #         scatter_colour = "y"
-
-        plt.scatter(self.x, self.y, marker="o", color="r")
+        """
+        Draws the particle's y-positions against its x-positions i.e. the x-y plane
+        """
+        plt.plot(self.x, self.y, color="r", label="trajectory in x-y plane")
         plt.xlabel("x (m)")
         plt.ylabel("y (m)")
         plt.show()
@@ -41,11 +36,11 @@ class SimpleGraphPlot:
     @staticmethod
     def getVectorElements(array, j):
         """
-        Extracts all the jth elements from an array of vectors
-        e.g. j = 0 extracts the first element from all vectors in the array
+        Extracts all the jth component from all vectors in an array
+        e.g. j = 0 extracts the first component from all vectors in the array (i.e. x-components)
         :param array: source array
-        :param j: which element should be extracted from all the vectors
-        :return: new array containing all the extracted elements
+        :param j: which component should be extracted from all the vectors
+        :return: new array containing all the extracted jth-components
         """
         new_array = []
 

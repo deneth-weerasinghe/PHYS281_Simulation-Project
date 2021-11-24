@@ -26,14 +26,14 @@ Satellite = Particle(
 )
 
 t = 0
-delta_T = 1000
+delta_T = 1
 
 Data = []  # list to store contents that will be written to "TwoBodyTest.npy"#
 
 times = []  # list storing values for the time (x axis) of the plot
 positions = []  # list storing values for the position (y axis) of the satellite
 
-for i in range(1, 20001):
+for i in range(1, (3600 * 24 * 4 * 2 + 1)):
 
     t += delta_T
 
@@ -49,9 +49,6 @@ for i in range(1, 20001):
         times.append(t)
         positions.append(Satellite.position.copy())
 
-for i in positions:
-    print(i)
-
 # for n, i in enumerate(positions):
 # print(times[n], i)
 # f = open(new_path + "/test_data.txt", "w+")
@@ -62,6 +59,6 @@ for i in positions:
 
 x_y_graph = SimpleGraphPlot(times, positions)
 
-x_y_graph.draw2DPositionGraph()
-
+# x_y_graph.draw2DPositionGraph()
+x_y_graph.drawTimeXGraph()
 # np.save(new_path + "/TwoBodyTest", Data, allow_pickle=True)
