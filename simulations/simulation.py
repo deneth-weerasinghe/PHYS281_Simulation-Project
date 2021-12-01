@@ -37,8 +37,8 @@ for i in range(1, (3600 * 24 * 4 * 2 + 1)):
 
     t += delta_T
 
-    Earth.updateGravitationalAcceleration(Satellite)
-    Satellite.updateGravitationalAcceleration(Earth)
+    Earth.updateEuler(Satellite)
+    Satellite.updateEuler(Earth)
 
     Earth.update(delta_T)
     Satellite.update(delta_T)

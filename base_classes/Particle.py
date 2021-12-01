@@ -48,20 +48,22 @@ class Particle:
         self.position += self.velocity * deltaT
         self.velocity += self.acceleration * deltaT
 
-    def updateGravitationalAcceleration(self, body):
+    def updateEuler(self, body):
         """
         Updates acceleration of object based on the gravitational field induced by another object
+
         :param body: the other object that influences the gravitational acceleration
         """
 
-        relativePosition = self.position - body.position
-        scalarDistance = np.linalg.norm(self.position - body.position)
-        g = - ((Particle.G * body.mass) / (scalarDistance ** 2)) * Particle.getUnitVector(relativePosition)
+        relative_position = self.position - body.position
+        scalar_distance = np.linalg.norm(self.position - body.position)
+        g = - ((Particle.G * body.mass) / (scalar_distance ** 2)) * Particle.getUnitVector(relative_position)
         self.acceleration = g
 
     def kineticEnergy(self):
         """
         Calculates and returns the kinetic energy of the particle
+
         :return: kinetic energy
         """
         e_k = 0.5 * self.mass * np.linalg.norm(self.velocity) ** 2
@@ -71,6 +73,7 @@ class Particle:
     def getUnitVector(a):
         """
         Takes a vector as argument and returns its unit vector
+
         :param a: vector to extract direction from
         :return: a unit vector in the same direction as :param a
         """
