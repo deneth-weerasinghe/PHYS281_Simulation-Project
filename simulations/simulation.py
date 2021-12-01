@@ -37,11 +37,11 @@ for i in range(1, (3600 * 24 * 4 * 2 + 1)):
 
     t += delta_T
 
-    Earth.updateEuler(Satellite)
-    Satellite.updateEuler(Earth)
+    Earth.updateGravitationalAcceleration(Satellite)
+    Satellite.updateGravitationalAcceleration(Earth)
 
-    Earth.update(delta_T)
-    Satellite.update(delta_T)
+    Earth.updateEuler(delta_T)
+    Satellite.updateEuler(delta_T)
 
     if (i - 1) % 100 == 0:  # which values of i should be considered when storing data
         Data.append([t, copy.deepcopy(Earth), copy.deepcopy(Satellite)])

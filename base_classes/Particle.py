@@ -39,16 +39,25 @@ class Particle:
             self.name, self.mass, self.position, self.velocity, self.acceleration
         )
 
-    def update(self, deltaT):
+    def updateEuler(self, delta_t):
         """
-        Updates position of object based on its velocity
+        Euler method for updating the position of an object: position is updated before object velocity
 
-        :param deltaT: time interval
+        :param delta_t: time interval
         """
-        self.position += self.velocity * deltaT
-        self.velocity += self.acceleration * deltaT
+        self.position += self.velocity * delta_t
+        self.velocity += self.acceleration * delta_t
 
-    def updateEuler(self, body):
+    def updateEulerCromer(self, delta_t):
+        """
+        Euler-Cromer method for updating the position of an object: object velocity is updated before position
+
+        :param delta_t: time interval
+        """
+        self.velocity += self.acceleration * delta_t
+        self.position += self.velocity * delta_t
+
+    def updateGravitationalAcceleration(self, body):
         """
         Updates acceleration of object based on the gravitational field induced by another object
 
@@ -78,4 +87,3 @@ class Particle:
         :return: a unit vector in the same direction as :param a
         """
         return np.array(a / np.linalg.norm(a), dtype=float)
-

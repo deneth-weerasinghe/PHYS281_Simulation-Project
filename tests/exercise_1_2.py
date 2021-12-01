@@ -31,7 +31,7 @@ while Ball.position[1] > 0.0:
     time += deltaT
 
     # update the positions and velocities
-    Ball.update(deltaT)
+    Ball.updateEuler(deltaT)
 
 
 # print out some information
