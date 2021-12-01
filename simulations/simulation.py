@@ -1,6 +1,7 @@
 import numpy as np
 import copy
 import os
+import matplotlib.pyplot as plt
 from base_classes.Particle import Particle
 from base_classes.SimpleGraphPlot import SimpleGraphPlot
 
@@ -33,7 +34,7 @@ Data = []  # list to store contents that will be written to "TwoBodyTest.npy"#
 times = []  # list storing values for the time (x axis) of the plot
 positions = []  # list storing values for the position (y axis) of the satellite
 
-for i in range(1, (3600 * 24 * 4 * 2 + 1)):
+for i in range(1, (3600 * 24 * 4 + 1)):
 
     t += delta_T
 
@@ -56,9 +57,11 @@ for i in range(1, (3600 * 24 * 4 * 2 + 1)):
 # to_save = [times[n], i]
 # print(to_save)
 # np.savetxt(f, to_save)
-
+print(positions)
 x_y_graph = SimpleGraphPlot(times, positions)
 
 # x_y_graph.draw2DPositionGraph()
-x_y_graph.drawTimeXGraph()
+x_y_graph.draw2DPositionGraph(color="b")
+plt.legend()
+plt.show()
 # np.save(new_path + "/TwoBodyTest", Data, allow_pickle=True)
