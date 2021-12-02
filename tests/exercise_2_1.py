@@ -1,7 +1,7 @@
 from simulations.simulation import *
 
 print("The Earth and Satellites Location after {0} seconds is:".format((2000 * 6)))
-for particle in [Earth, Satellite]:
+for particle in [Earth, satellite_1]:
     print("  Particle: {}".format(particle.name))
     print("    Mass: {0:.3e}, ".format(particle.mass))
     for attribute in ["position", "velocity", "acceleration"]:

@@ -34,12 +34,10 @@ def satellite_system_objects():
     return earth, satellite
 
 
-def two_bodies_simulation_loop(delta_t, iterations, object_1, object_2, t=0):
+def two_bodies_euler_loop(delta_t, iterations, object_1, object_2, file, t=0):
     data = []  # list to store contents that will be written to "TwoBodyTest.npy"#
-    times = []  # list storing values for the time (x axis) of the plot
-    positions = []  # list storing values for the position (y axis) of the satellite
 
-    for i in range(1, (3600 * 24 * 4 + 1)):
+    for i in range(1, iterations + 1):
 
         t += delta_t
 
@@ -52,11 +50,51 @@ def two_bodies_simulation_loop(delta_t, iterations, object_1, object_2, t=0):
         if (i - 1) % 100 == 0:  # which values of i should be considered when storing data
             data.append([t, copy.deepcopy(object_1), copy.deepcopy(object_2)])
 
-            # times.append(t)
-            # positions.append(Satellite.position.copy())
+    np.save(new_path + file, data, allow_pickle=True)
 
 
-Earth, Satellite = satellite_system_objects()
+def two_bodies_euler_cromer_loop(delta_t, iterations, object_1, object_2, file, t=0):
+    data = []  # list to store contents that will be written to "TwoBodyTest.npy"#
 
+    for i in range(1, iterations + 1):
+
+        t += delta_t
+
+        object_1.updateGravitationalAcceleration(object_2)
+        object_2.updateGravitationalAcceleration(object_1)
+
+        object_1.updateEulerCromer(delta_t)
+        object_2.updateEulerCromer(delta_t)
+
+        if (i - 1) % 100 == 0:  # which values of i should be considered when storing data
+            data.append([t, copy.deepcopy(object_1), copy.deepcopy(object_2)])
+
+    np.save(new_path + file, data, allow_pickle=True)
+
+
+def retrieve_data(file, s):
+    data = np.load(file, allow_pickle=True)
+    times = []
+    positions = []
+    for i in data:
+        times.append(i[0])
+        positions.append(i[s].position)
+    return times, positions
+
+
+Earth, satellite_1 = satellite_system_objects()
+two_bodies_euler_loop(1, 3600 * 24 * 4, Earth, satellite_1, "/TwoBodyTest")
+
+Earth_2, satellite_2 = satellite_system_objects()
+two_bodies_euler_cromer_loop(1, 3600 * 24 * 4, Earth_2, satellite_2, "/CromerTest")
+
+
+sat_1_times, sat_1_pos = retrieve_data(new_path + "/TwoBodyTest.npy", 2)
+sat_2_times, sat_2_pos = retrieve_data(new_path + "/CromerTest.npy", 2)
+
+satellite_x_y = SimpleGraphPlot(sat_1_times, sat_1_pos)
+satellite_x_y_2 = SimpleGraphPlot(sat_2_times, sat_2_pos)
+satellite_x_y.draw2DPositionGraph(color="r", label="Euler")
+satellite_x_y_2.draw2DPositionGraph(color="b", label="Euler Cromer")
 plt.legend()
 plt.show()

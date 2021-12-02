@@ -15,7 +15,7 @@ def print_particle(particle):
 
 print("The Earth and Satellites Location after {0} seconds is:".format((2000 * 6)))
 print_particle(Earth)
-print_particle(Satellite)
+print_particle(satellite_1)
 
 if path.exists(file_path):
     print("The file TwoBodyTest.npy has been created.")

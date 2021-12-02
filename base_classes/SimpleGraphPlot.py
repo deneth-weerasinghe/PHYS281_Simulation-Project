@@ -21,7 +21,6 @@ class SimpleGraphPlot:
         plt.plot(self.times, self.x, "-r", label='x-component')
         plt.xlabel('time (s)')
         plt.ylabel('position')
-        plt.legend()
 
     def draw2DPositionGraph(self, color="r", label="trajectory in x-y plane"):
         """
