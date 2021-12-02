@@ -41,8 +41,11 @@ def two_bodies_euler_loop(delta_t, iterations, object_1, object_2, file, t=0):
 
         t += delta_t
 
-        object_1.updateGravitationalAcceleration(object_2)
-        object_2.updateGravitationalAcceleration(object_1)
+        object_1_g = object_1.twoBodiesAcceleration(object_2)
+        object_2_g = object_2.twoBodiesAcceleration(object_1)
+
+        object_1.setAcceleration(object_1_g)
+        object_2.setAcceleration(object_2_g)
 
         object_1.updateEuler(delta_t)
         object_2.updateEuler(delta_t)
@@ -54,14 +57,17 @@ def two_bodies_euler_loop(delta_t, iterations, object_1, object_2, file, t=0):
 
 
 def two_bodies_euler_cromer_loop(delta_t, iterations, object_1, object_2, file, t=0):
-    data = []  # list to store contents that will be written to "TwoBodyTest.npy"#
+    data = []  # list to store contents that will be written to "TwoBodyTest.npy"
 
     for i in range(1, iterations + 1):
 
         t += delta_t
 
-        object_1.updateGravitationalAcceleration(object_2)
-        object_2.updateGravitationalAcceleration(object_1)
+        object_1_g = object_1.twoBodiesAcceleration(object_2)
+        object_2_g = object_2.twoBodiesAcceleration(object_1)
+
+        object_1.setAcceleration(object_1_g)
+        object_2.setAcceleration(object_2_g)
 
         object_1.updateEulerCromer(delta_t)
         object_2.updateEulerCromer(delta_t)

@@ -3,7 +3,9 @@ import numpy as np
 
 
 class SimpleGraphPlot:
-
+    """
+    Class for creating graphs of the path of a single body
+    """
     def __init__(self, times, positions):
         extracted_x = SimpleGraphPlot.getOneBodyVectorElements(positions, 0)
         extracted_y = SimpleGraphPlot.getOneBodyVectorElements(positions, 1)

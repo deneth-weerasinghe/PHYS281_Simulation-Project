@@ -57,7 +57,10 @@ class Particle:
         self.velocity += self.acceleration * delta_t
         self.position += self.velocity * delta_t
 
-    def updateGravitationalAcceleration(self, body):
+    def setAcceleration(self, g):
+        self.acceleration = g
+
+    def twoBodiesAcceleration(self, body):
         """
         Updates acceleration of object based on the gravitational field induced by another object
 
@@ -67,7 +70,18 @@ class Particle:
         relative_position = self.position - body.position
         scalar_distance = np.linalg.norm(self.position - body.position)
         g = - ((Particle.G * body.mass) / (scalar_distance ** 2)) * Particle.getUnitVector(relative_position)
-        self.acceleration = g
+        return g
+
+    def NBodyAcceleration(self, objects):
+        """
+        Updates the acceleration of the object based on the total effects of the masses of all other objects
+        :param objects: list of gravitational particles
+        """
+
+        g = 0
+        for i in objects:
+            if i != self:
+                g += Particle.twoBodiesAcceleration(self, i)
 
     def kineticEnergy(self):
         """
