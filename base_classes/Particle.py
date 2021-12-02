@@ -70,11 +70,13 @@ class Particle:
         relative_position = self.position - body.position
         scalar_distance = np.linalg.norm(self.position - body.position)
         g = - ((Particle.G * body.mass) / (scalar_distance ** 2)) * Particle.getUnitVector(relative_position)
-        return g
+        return np.array(g, dtype=float)
 
     def NBodyAcceleration(self, objects):
         """
-        Updates the acceleration of the object based on the total effects of the masses of all other objects
+        Updates the acceleration of the object based on the resultant acceleration due to the masses of all other
+        objects by using the twoBodiesAcceleration method in a loop
+
         :param objects: list of gravitational particles
         """
 
@@ -82,6 +84,7 @@ class Particle:
         for i in objects:
             if i != self:
                 g += Particle.twoBodiesAcceleration(self, i)
+        return np.array(g, dtype=float)
 
     def kineticEnergy(self):
         """
