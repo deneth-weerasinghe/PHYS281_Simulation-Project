@@ -39,15 +39,6 @@ class Particle:
             self.name, self.mass, self.position, self.velocity, self.acceleration
         )
 
-    def getPosition(self):
-        return self.position
-
-    def getVelocity(self):
-        return self.velocity
-
-    def getAcceleration(self):
-        return self.acceleration
-
     def updateEuler(self, delta_t):
         """
         Euler method for updating the position of an object: position is updated before object velocity
