@@ -58,7 +58,7 @@ class Particle:
         self.position += self.velocity * delta_t
 
     def setAcceleration(self, g):
-        self.acceleration = g
+        self.acceleration = np.array(g, dtype=float)
 
     def twoBodiesAcceleration(self, body):
         """
@@ -82,7 +82,7 @@ class Particle:
 
         g = 0
         for i in objects:
-            if i != self:
+            if i != self:  # exclude self from the calculation of resultant acceleration
                 g += Particle.twoBodiesAcceleration(self, i)
         return np.array(g, dtype=float)
 
