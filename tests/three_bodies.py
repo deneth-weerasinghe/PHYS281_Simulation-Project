@@ -9,6 +9,9 @@ new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
 def retrieve_data():
     raw_data = np.load(new_path + "/three_body_test.npy", allow_pickle=True)
     processed_data = []
-    for i in range(100):
-        processed_data.append([raw_data[i][1].position, raw_data[i][2].position, raw_data[i][3].position])
+    for i in raw_data:
+        processed_data.append([i[1].position, i[2].position, i[3].position])
     return processed_data
+
+# def plot_paths(data):
+#
