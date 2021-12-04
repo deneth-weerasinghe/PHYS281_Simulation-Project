@@ -1,9 +1,7 @@
 import numpy as np
 import copy
 import os
-import matplotlib.pyplot as plt
 from base_classes.Particle import Particle
-from base_classes.SimpleGraphPlot import SimpleGraphPlot
 
 new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
 
@@ -41,12 +39,10 @@ def two_bodies_euler_loop(delta_t, iterations, object_1, object_2, file, t=0):
 
         t += delta_t
 
-        object_1.setAcceleration(object_1.NBodyAcceleration([object_2]))
+        object_1.setAcceleration(object_1.NBodyAcceleration([object_2]))  # using the generalised n-bodies method
         object_2.setAcceleration(object_2.NBodyAcceleration([object_1]))
-        # object_1.setAcceleration(object_1.twoBodiesAcceleration(object_2))
+        # object_1.setAcceleration(object_1.twoBodiesAcceleration(object_2))  # using the basic two-bodies only method
         # object_2.setAcceleration(object_2.twoBodiesAcceleration(object_1))
-
-        print(object_2.acceleration)
 
         object_1.updateEuler(delta_t)
         object_2.updateEuler(delta_t)
@@ -64,11 +60,8 @@ def two_bodies_euler_cromer_loop(delta_t, iterations, object_1, object_2, file, 
 
         t += delta_t
 
-        object_1_g = object_1.twoBodiesAcceleration(object_2)
-        object_2_g = object_2.twoBodiesAcceleration(object_1)
-
-        object_1.setAcceleration(object_1_g)
-        object_2.setAcceleration(object_2_g)
+        object_1.setAcceleration(object_1.NBodyAcceleration([object_2]))
+        object_2.setAcceleration(object_2.NBodyAcceleration([object_1]))
 
         object_1.updateEulerCromer(delta_t)
         object_2.updateEulerCromer(delta_t)
@@ -80,7 +73,7 @@ def two_bodies_euler_cromer_loop(delta_t, iterations, object_1, object_2, file, 
 
 
 Earth, satellite_1 = satellite_system_objects()
-two_bodies_euler_loop(1, 3600 * 24 * 4, Earth, satellite_1, "/TwoBodyTest")
+two_bodies_euler_loop(1, 3600 * 24 * 4, Earth, satellite_1, "/two_body_test")
 
-# Earth_2, satellite_2 = satellite_system_objects()
-# two_bodies_euler_cromer_loop(1, 3600 * 24 * 4, Earth_2, satellite_2, "/CromerTest")
+Earth_2, satellite_2 = satellite_system_objects()
+two_bodies_euler_cromer_loop(1, 3600 * 24 * 4, Earth_2, satellite_2, "/cromer_test")

@@ -21,14 +21,14 @@ def retrieve_data(file, s):
     return times, positions
 
 
-sat_1_times, sat_1_pos = retrieve_data(new_path + "/TwoBodyTest.npy", 2)
-sat_2_times, sat_2_pos = retrieve_data(new_path + "/CromerTest.npy", 2)
+sat_1_times, sat_1_pos = retrieve_data(new_path + "/two_body_test.npy", 2)
+sat_2_times, sat_2_pos = retrieve_data(new_path + "/cromer_test.npy", 2)
 
 euler_x_y = SimpleGraphPlot(sat_1_times, sat_1_pos)  # Plot for the Euler method
 euler_cromer_x_y = SimpleGraphPlot(sat_2_times, sat_2_pos)  # Plot for the Euler-Cromer method
 
 euler_x_y.draw2DPositionGraph(color="r", label="Euler")
-# satellite_x_y_2.draw2DPositionGraph(color="b", label="Euler-Cromer")
+euler_cromer_x_y.draw2DPositionGraph(color="b", label="Euler-Cromer")
 
 plt.legend()
 plt.show()

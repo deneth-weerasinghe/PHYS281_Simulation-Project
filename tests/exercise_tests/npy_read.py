@@ -1,10 +1,9 @@
 import numpy as np
 import os
 
-file_path = os.getcwd()
-file_path = file_path.replace("tests", "data_files/TwoBodyTest.npy")
+list_1 = [0, 1, 2, 3, 4, 5]
 
-data = np.load(file_path, allow_pickle=True)
-print(data[5][1].position)
-print(data[5][1].velocity)
-print(data[5][1].acceleration)
+my_list = []
+x = ["t"] + [i for i in list_1]
+my_list.append(x)
+print(my_list)

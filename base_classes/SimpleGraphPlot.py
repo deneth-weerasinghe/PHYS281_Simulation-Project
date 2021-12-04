@@ -47,3 +47,4 @@ class SimpleGraphPlot:
             new_array.append(i[j])
 
         return new_array
+

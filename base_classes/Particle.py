@@ -64,7 +64,7 @@ class Particle:
         """
         Updates acceleration of object based on the gravitational field induced by another object
 
-        :param body: the other object that influences the gravitational acceleration
+        :param body: instance of this class; the other object that influences the gravitational acceleration
         """
 
         relative_position = self.position - body.position
