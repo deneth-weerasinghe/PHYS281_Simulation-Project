@@ -20,13 +20,13 @@ def retrieve_data():
     return processed_data, names
 
 
-def plot_paths(data, labels, colours):
+def plot_paths(data, labels):
     for p in range(len(data[0])):  # iterates through each particle
         subset = []
         for i in data:  # looking at ith time saved
             subset.append(i[p])
         graph = SimpleGraphPlot(subset)
-        graph.draw2DPositionGraph(color=colours[p], label=labels[p])  # plots the path of a particle
+        graph.draw2DPositionGraph(label=labels[p])  # plots the path of a particle
     plt.legend()
     plt.show()
 
@@ -34,4 +34,4 @@ def plot_paths(data, labels, colours):
 dataset, names = retrieve_data()
 my_colours = ["g", "r", "orange"]
 print(names)
-plot_paths(dataset, names, my_colours)
+plot_paths(dataset, names)
