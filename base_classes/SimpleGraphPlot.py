@@ -6,7 +6,9 @@ class SimpleGraphPlot:
     """
     Class for creating graphs of the path of a single body
     """
-    def __init__(self, positions, times=[]):
+    def __init__(self, positions, times=None):
+        if times is None:
+            times = []
         extracted_x = SimpleGraphPlot.getOneBodyVectorElements(positions, 0)
         extracted_y = SimpleGraphPlot.getOneBodyVectorElements(positions, 1)
         extracted_z = SimpleGraphPlot.getOneBodyVectorElements(positions, 2)

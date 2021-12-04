@@ -15,7 +15,8 @@ class Particle:
                  velocity=np.array([0, 0, 0], dtype=float),
                  acceleration=np.array([0, -10, 0], dtype=float),
                  name="Ball",
-                 mass=1.0
+                 mass=1.0,
+                 colour="r"
                  ):
         """
         Constructor
@@ -28,6 +29,7 @@ class Particle:
         """
 
         # class variables
+        self.colour = colour
         self.name = name
         self.mass = mass
         self.position = np.array(position, dtype=float)  # Copies input array and converts all elements into floats

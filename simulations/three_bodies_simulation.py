@@ -39,29 +39,6 @@ def satellite_system_objects():
     return [earth] + satellites
 
 
-"""
-    sat_1_position = earth_radius + (35786 * 1e3)
-    sat_1_velocity = np.sqrt(earth.G * earth.mass / sat_1_position)  # from centrifugal force = gravitational force
-
-    sat_2_position = earth_radius + (35786 * 1e3) * 2
-    sat_2_velocity = np.sqrt(earth.G * earth.mass / sat_2_position)  # from centrifugal force = gravitational force
-
-    satellite_1 = Particle(
-        position=np.array([sat_1_position, 0, 0]),
-        velocity=np.array([0, sat_1_velocity, 0]),
-        acceleration=np.array([0, 0, 0]),
-        name="Satellite 1",
-        mass=100.
-    )
-    satellite_2 = Particle(
-        position=np.array([sat_2_position, 0, 0]),
-        velocity=np.array([0, sat_2_velocity, 0]),
-        acceleration=np.array([0, 0, 0]),
-        name="Satellite 2",
-        mass=100.
-    )"""
-
-
 def three_body_simulation(delta_t, iterations, objects, file, t=0):
     """
     Simulation loop for a 3 body system.
