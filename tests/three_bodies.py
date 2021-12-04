@@ -11,23 +11,27 @@ def retrieve_data():
     processed_data = []
     names = []
     for i in raw_data:
-        processed_data.append([i[1].position, i[2].position, i[3].position])
-    for j in range(1, len(raw_data[0])):
-        names.append(raw_data[0][j].name)
+        temp = []
+        for j in range(1, len(i)):
+            if len(names) < len(i) - 1:  # creates a separate list for the names of the objects
+                names.append(i[j].name)
+            temp.append(i[j].position)
+        processed_data.append(temp)
     return processed_data, names
 
 
-def plot_paths(data, names, colours):
+def plot_paths(data, labels, colours):
     for p in range(len(data[0])):  # iterates through each particle
         subset = []
         for i in data:  # looking at ith time saved
             subset.append(i[p])
         graph = SimpleGraphPlot(subset)
-        graph.draw2DPositionGraph(color=colours[p], label=names[p])  # plots the path of a particle
+        graph.draw2DPositionGraph(color=colours[p], label=labels[p])  # plots the path of a particle
     plt.legend()
     plt.show()
 
 
 dataset, names = retrieve_data()
-colours = ["g", "r", "orange"]
-plot_paths(dataset, names, colours)
+my_colours = ["g", "r", "orange"]
+print(names)
+plot_paths(dataset, names, my_colours)
