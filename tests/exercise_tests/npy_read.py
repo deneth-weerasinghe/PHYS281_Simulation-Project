@@ -7,3 +7,6 @@ my_list = []
 x = ["t"] + [i for i in list_1]
 my_list.append(x)
 print(my_list)
+
+b = "Christmas"
+print(b.lower())
