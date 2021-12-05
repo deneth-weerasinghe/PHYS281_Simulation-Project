@@ -2,16 +2,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-class SimpleGraphPlot:
+class GraphPlot:
     """
     Class for creating graphs of the path of a single body
     """
+
     def __init__(self, positions, times=None):
         if times is None:
             times = []
-        extracted_x = SimpleGraphPlot.getOneBodyVectorElements(positions, 0)
-        extracted_y = SimpleGraphPlot.getOneBodyVectorElements(positions, 1)
-        extracted_z = SimpleGraphPlot.getOneBodyVectorElements(positions, 2)
+        extracted_x = GraphPlot.getOneBodyVectorElements(positions, 0)
+        extracted_y = GraphPlot.getOneBodyVectorElements(positions, 1)
+        extracted_z = GraphPlot.getOneBodyVectorElements(positions, 2)
 
         self.times = np.array(times, dtype=float)
         self.x = extracted_x
@@ -22,17 +23,22 @@ class SimpleGraphPlot:
         """
         Draws the particle's x-position as a function of time
         """
-        plt.plot(self.times, self.x, "-r", label='x-component')
+        plt.plot(self.times, self.x, "-r", label='X-component')
         plt.xlabel('time (s)')
         plt.ylabel('position')
 
-    def draw2DPositionGraph(self, color="r", label="trajectory in x-y plane"):
+    def draw2DPositionGraph(self, label="Trajectory in x-y plane"):
         """
         Draws the particle's y-positions against its x-positions i.e. the x-y plane
         """
-        plt.plot(self.x, self.y, color=color, label=label)
-        plt.xlabel("x (m)")
-        plt.ylabel("y (m)")
+        plt.plot(self.x, self.y, label=label)
+
+    def draw3DPositionGraph(self, label="Trajectory in 3D space"):
+        """
+        Draws the particle's path in 3D cartesian space"
+        """
+        ax = plt.axes(projection="3d")
+        ax.plot(self.x, self.y, self.z, label=label)
 
     @staticmethod
     def getOneBodyVectorElements(array, j):
@@ -49,4 +55,3 @@ class SimpleGraphPlot:
             new_array.append(i[j])
 
         return new_array
-
