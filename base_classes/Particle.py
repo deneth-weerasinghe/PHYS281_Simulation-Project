@@ -1,14 +1,8 @@
 import numpy as np
+from astropy.constants import G
 
 
 class Particle:
-    """
-    Class constants
-
-    :cvar G: gravitational constant
-    """
-
-    G = 6.67408E-11  # units: m^3 kg^-1 s^-2
 
     def __init__(self,
                  position=np.array([0, 0, 0], dtype=float),
@@ -71,7 +65,7 @@ class Particle:
 
         relative_position = self.position - body.position
         scalar_distance = np.linalg.norm(self.position - body.position)
-        g = - ((Particle.G * body.mass) / (scalar_distance ** 2)) * Particle.getUnitVector(relative_position)
+        g = - ((G * body.mass) / (scalar_distance ** 2)) * Particle.getUnitVector(relative_position)
         return np.array(g, dtype=float)
 
     def NBodyAcceleration(self, objects):
