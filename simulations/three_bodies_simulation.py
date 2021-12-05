@@ -8,7 +8,7 @@ new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
 
 def satellite_system_objects():
     """
-    Creates a simple preset of a three-body gravitational system, consisting of Earth and two satellites
+    Creates a simple preset of a n-body gravitational system, consisting of Earth and n satellites
     :return: list of Particle objects
     """
     earth_mass = 5.97237e24  # https://en.wikipedia.org/wiki/Earth
