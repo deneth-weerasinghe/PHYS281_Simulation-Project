@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from base_classes.GraphPlot import GraphPlot
 
-new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
+new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files/method_test_data")
 
 
 def retrieve_data(file, s):

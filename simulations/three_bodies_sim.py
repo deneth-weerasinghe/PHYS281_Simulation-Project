@@ -39,7 +39,7 @@ def satellite_system_objects():
     return [earth] + satellites
 
 
-def three_body_simulation(delta_t, iterations, objects, file, t=0):
+def simulation_loop(delta_t, iterations, objects, file, t=0):
     """
     Simulation loop for a 3 body system.
 
@@ -64,4 +64,4 @@ def three_body_simulation(delta_t, iterations, objects, file, t=0):
 
 
 object_list = satellite_system_objects()
-three_body_simulation(1, 3600 * 24 * 4, object_list, "/three_body_test")
+simulation_loop(1, 3600 * 24 * 4, object_list, "/three_body_test")

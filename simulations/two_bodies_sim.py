@@ -53,7 +53,7 @@ def two_bodies_euler_loop(delta_t, iterations, object_1, object_2, file, t=0):
     np.save(new_path + file, data, allow_pickle=True)
 
 
-def two_bodies_euler_cromer_loop(delta_t, iterations, object_1, object_2, file, t=0):
+def simulation_loop(delta_t, iterations, object_1, object_2, file, t=0):
     data = []  # list to store contents that will be written to "TwoBodyTest.npy"
 
     for i in range(1, iterations + 1):
@@ -67,7 +67,7 @@ def two_bodies_euler_cromer_loop(delta_t, iterations, object_1, object_2, file, 
         object_2.updateEulerCromer(delta_t)
 
         if (i - 1) % 100 == 0:  # which values of i should be considered when storing data
-            data.append([t, copy.deepcopy(object_1), copy.deepcopy(object_2)])
+            data.append([copy.deepcopy(object_1), copy.deepcopy(object_2)])
 
     np.save(new_path + file, data, allow_pickle=True)
 
@@ -76,4 +76,4 @@ Earth, satellite_1 = satellite_system_objects()
 two_bodies_euler_loop(1, 3600 * 24 * 4, Earth, satellite_1, "/two_body_test")
 
 Earth_2, satellite_2 = satellite_system_objects()
-two_bodies_euler_cromer_loop(1, 3600 * 24 * 4, Earth_2, satellite_2, "/cromer_test")
+simulation_loop(1, 3600 * 24 * 4, Earth_2, satellite_2, "/cromer_test")

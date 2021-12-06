@@ -37,7 +37,7 @@ class Particle:
         """
         Euler method for updating the position of an object: position is updated before object velocity
 
-        :param delta_t: time interval
+        :param delta_t: integer; time interval
         """
         self.position += self.velocity * delta_t
         self.velocity += self.acceleration * delta_t
@@ -46,38 +46,76 @@ class Particle:
         """
         Euler-Cromer method for updating the position of an object: object velocity is updated before position
 
-        :param delta_t: time interval
+        :param delta_t: integer; time interval
         """
         self.velocity += self.acceleration * delta_t
         self.position += self.velocity * delta_t
 
+    def updateEulerRichardson(self, delta_t, objects):
+        """
+        Euler-Richardson method for updating position and velocity: position, velocity and acceleration are
+        calculated for t = delta_t / 2 and these values are used to calculate the position and velocity class
+        attributes
+        :param delta_t: integer; time interval
+        :param objects: list of Particle objects, used to calculate a_mid
+        """
+        x_mid = self.position + 0.5 * self.velocity * delta_t
+        v_mid = self.velocity + 0.5 * self.acceleration * delta_t
+        a_mid = self.NBodyAcceleration(objects, x_mid=x_mid)
+
+        self.velocity += a_mid * delta_t
+        self.position += v_mid * delta_t
+
+    def updateVerler(self, delta_t, objects):
+        """
+        Verler method for updating position and velocity: position is calculate according to classical kinematics and
+        velocity requires both the current acceleration (saved in a dummy variable) and the updated acceleration using
+        the newly updated position
+        :param delta_t: integer; time interval
+        :param objects: list of Particle objects, used as a argument for the new acceleration
+        :return:
+        """
+        current_a = self.acceleration
+
+        self.position += delta_t + 0.5 * self.acceleration * delta_t ** 2
+        self.setAcceleration(self.NBodyAcceleration(objects))
+        self.velocity += 0.5 * (self.acceleration + current_a) * delta_t
+
     def setAcceleration(self, g):
         self.acceleration = np.array(g, dtype=float)
 
-    def twoBodiesAcceleration(self, body):
+    def twoBodiesAcceleration(self, body, richardson=False, x_mid=None):
         """
         Updates acceleration of object based on the gravitational field induced by another object
-
         :param body: instance of this class; the other object that influences the gravitational acceleration
+        :param richardson: boolean; checks if this method has been called by updateEulerRichardson; default: False
+        :param x_mid: the "middle" position used in EulerRichardson calculations
         """
 
-        relative_position = self.position - body.position
-        scalar_distance = np.linalg.norm(self.position - body.position)
+        temp_pos = self.position
+        # changes the position vector if called by updateEulerRichardson
+        if richardson:
+            temp_pos = x_mid
+
+        relative_position = temp_pos - body.position
+        # print(relative_position)
+        scalar_distance = np.linalg.norm(temp_pos - body.position)
         g = - ((G * body.mass) / (scalar_distance ** 2)) * Particle.getUnitVector(relative_position)
         return np.array(g, dtype=float)
 
-    def NBodyAcceleration(self, objects):
+    def NBodyAcceleration(self, objects, x_mid=None):
         """
         Updates the acceleration of the object based on the resultant acceleration due to the masses of all other
         objects by using the twoBodiesAcceleration method in a loop
 
-        :param objects: list of gravitational particles
+        :param objects: list of Particle objects
+        :param x_mid: "middle" position for se in EulerRichardson calculations
         """
 
         g = 0
         for i in objects:
             if i != self:  # exclude self from the calculation of resultant acceleration
-                g += Particle.twoBodiesAcceleration(self, i)
+                g += Particle.twoBodiesAcceleration(self, i, x_mid=x_mid)
         return np.array(g, dtype=float)
 
     def kineticEnergy(self):
