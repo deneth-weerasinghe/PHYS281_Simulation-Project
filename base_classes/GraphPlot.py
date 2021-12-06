@@ -40,6 +40,8 @@ class GraphPlot:
         ax = plt.axes(projection="3d")
         ax.plot(self.x, self.y, self.z, label=label)
 
+        return ax
+
     @staticmethod
     def getOneBodyVectorElements(array, j):
         """
@@ -55,3 +57,24 @@ class GraphPlot:
             new_array.append(i[j])
 
         return new_array
+
+    @staticmethod
+    def retrieveData(path, file):
+        """
+        Retrieves data from a specified file in a specified subdirectory
+        :param path: the directory the data file is located in, in string
+        :param file: the filename of the data file, in string
+        :return: list of position vectors of each object, names of the objects
+        """
+        raw_data = np.load(path + file, allow_pickle=True)
+        processed_data = []
+        names = []
+        for i in raw_data:
+            print(i[4].acceleration)
+            temp = []
+            for j in range(1, len(i)):
+                if len(names) < len(i) - 1:  # generates separate list for the names of the objects
+                    names.append(i[j].name)
+                temp.append(i[j].position)
+            processed_data.append(temp)
+        return processed_data, names

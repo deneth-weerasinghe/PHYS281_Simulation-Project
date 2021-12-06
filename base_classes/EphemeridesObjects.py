@@ -48,11 +48,11 @@ class EphemeridesObjects:
 
         state_vec = [
             pos.xyz[0].to("m").value,
-            pos.xyz[0].to("m").value,
-            pos.xyz[0].to("m").value,
+            pos.xyz[1].to("m").value,
+            pos.xyz[2].to("m").value,
             vel.xyz[0].to("m/s").value,
-            vel.xyz[0].to("m/s").value,
-            vel.xyz[0].to("m/s").value,
+            vel.xyz[1].to("m/s").value,
+            vel.xyz[2].to("m/s").value,
         ]
 
         #  get transformation matrix to the ecliptic (use time in Julian days)
@@ -91,7 +91,7 @@ class EphemeridesObjects:
                 Particle(
                     position=np.array(pos, dtype=float),
                     velocity=np.array(vel, dtype=float),
-                    acceleration=np.array([0, 0, 0], dtype=float),
+                    acceleration=np.array([0, -10, 0], dtype=float),
                     name=label,
                     mass=EphemeridesObjects.getMass(self.raw_masses[i])
                 )

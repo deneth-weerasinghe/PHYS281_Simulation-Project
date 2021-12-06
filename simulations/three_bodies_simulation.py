@@ -1,6 +1,6 @@
-import numpy as np
-import copy
 import os
+import copy
+import numpy as np
 from base_classes.Particle import Particle
 
 new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
