@@ -1,4 +1,4 @@
-from simulations.two_bodies_simulation import *
+from simulations.two_bodies_sim import *
 from os import path
 
 parent_dir = os.path.dirname(os.getcwd())

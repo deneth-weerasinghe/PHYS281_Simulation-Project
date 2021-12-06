@@ -12,9 +12,7 @@ class EphemeridesObjects:
     Stores initial conditions pulled from JPL to be used for instances of Particle
     """
 
-    def __init__(self, raw_t_0="2021-12-04 00:00:00.0",
-                 labels=None,
-                 raw_masses=None):
+    def __init__(self, raw_t_0="2021-12-04 00:00:00.0", labels=None, raw_masses=None):
 
         #  default values; this format of setting default values has been suggested by my IDE
         if raw_masses is None:

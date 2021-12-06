@@ -14,11 +14,11 @@ sun_pos, sun_vel = get_body_barycentric_posvel(bodies[0].lower(), t, ephemeris="
 
 state_vec = [
     sun_pos.xyz[0].to("m").value,
-    sun_pos.xyz[0].to("m").value,
-    sun_pos.xyz[0].to("m").value,
+    sun_pos.xyz[1].to("m").value,
+    sun_pos.xyz[2].to("m").value,
     sun_vel.xyz[0].to("m/s").value,
-    sun_vel.xyz[0].to("m/s").value,
-    sun_vel.xyz[0].to("m/s").value,
+    sun_vel.xyz[1].to("m/s").value,
+    sun_vel.xyz[2].to("m/s").value,
 ]
 
 #  get transformation matrix to the ecliptic (use time in Julian days)

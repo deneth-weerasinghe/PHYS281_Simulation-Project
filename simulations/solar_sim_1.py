@@ -25,7 +25,7 @@ def generate_data(delta_t, iterations, objects, file, t=0):
         for j in objects:
             j.setAcceleration(j.NBodyAcceleration(objects))
             j.updateEuler(delta_t)
-        print(objects[3].acceleration)
+        # if (i - 1) % 100 == 0:
         data.append([t] + [copy.deepcopy(k) for k in objects])
     np.save(new_path + file, data, allow_pickle=True)
 
@@ -51,4 +51,4 @@ solar_system = EphemeridesObjects(t_0, labels, raw_masses)
 solar_objects = solar_system.obtainObjects()
 
 # simulate for 365 days, Earth should complete one full orbit
-generate_data(3600 * 24, 365, solar_objects, "/solar_test_data_1")
+generate_data(3600 * 24, 365 * 10, solar_objects, "/solar_test_data_1")

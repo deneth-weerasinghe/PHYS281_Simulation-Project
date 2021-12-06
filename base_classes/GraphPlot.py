@@ -30,17 +30,18 @@ class GraphPlot:
     def draw2DPositionGraph(self, label="Trajectory in x-y plane"):
         """
         Draws the particle's y-positions against its x-positions i.e. the x-y plane
+        :param: label: string label to input into the plot function
         """
         plt.plot(self.x, self.y, label=label)
 
-    def draw3DPositionGraph(self, label="Trajectory in 3D space"):
+    def draw3DPositionGraph(self, axes, label="Trajectory in 3D space"):
         """
-        Draws the particle's path in 3D cartesian space"
+        Draws the particle's path in 3D space
+        :param axes: plt.axes object
+        :param label: string label to input into the plot function
+        :return: plt.axes object for use to label the axis, which is done just after this method is called
         """
-        ax = plt.axes(projection="3d")
-        ax.plot(self.x, self.y, self.z, label=label)
-
-        return ax
+        axes.plot(self.x, self.y, self.z, label=label)
 
     @staticmethod
     def getOneBodyVectorElements(array, j):
@@ -48,7 +49,7 @@ class GraphPlot:
         Extracts all the jth component from all vectors in an array
         e.g. j = 0 extracts the first component from all vectors in the array (i.e. x-components)
         :param array: source array
-        :param j: which component should be extracted from all the vectors
+        :param j: integer, which component should be extracted from all the vectors
         :return: new array containing all the extracted jth-components
         """
         new_array = []
@@ -64,13 +65,12 @@ class GraphPlot:
         Retrieves data from a specified file in a specified subdirectory
         :param path: the directory the data file is located in, in string
         :param file: the filename of the data file, in string
-        :return: list of position vectors of each object, names of the objects
+        :return: list of position vectors (list of floats) of each object, names of the objects (list of strings)
         """
         raw_data = np.load(path + file, allow_pickle=True)
         processed_data = []
         names = []
         for i in raw_data:
-            print(i[4].acceleration)
             temp = []
             for j in range(1, len(i)):
                 if len(names) < len(i) - 1:  # generates separate list for the names of the objects
