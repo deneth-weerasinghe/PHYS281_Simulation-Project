@@ -77,7 +77,7 @@ class Particle:
         """
         current_a = self.acceleration
 
-        self.position += delta_t + 0.5 * self.acceleration * delta_t ** 2
+        self.position += self.velocity * delta_t + 0.5 * self.acceleration * delta_t ** 2
         self.setAcceleration(self.NBodyAcceleration(objects))
         self.velocity += 0.5 * (self.acceleration + current_a) * delta_t
 
