@@ -31,7 +31,7 @@ def plot_paths(data, labels):
     """
     Plots and displays the data as a series of overlaid 2D graphs of y-position against x-position
     :param data: 3D list of floats; the input data
-    :param labels:
+    :param labels: list of labels for each object to use in the plot's legend
     """
     for p in range(len(data[0])):  # iterates through each particle
         subset = []
