@@ -34,28 +34,6 @@ def generate_satellites():
     return satellites
 
 
-"""
-def simulation_loop(delta_t, iterations, objects, file, t=0):
-    data = []
-    for k in range(iterations + 1):
-
-        t += delta_t
-        for j, obj in enumerate(objects):
-            obj.setAcceleration(obj.NBodyAcceleration(objects))
-            if j == 1:
-                obj.updateEuler(delta_t)
-            elif j == 2:
-                obj.updateEulerCromer(delta_t)
-            elif j == 3:
-                obj.updateEulerRichardson(delta_t, objects)
-            elif j == 4:
-                obj.updateVerler(delta_t, objects)
-        if (k - 1) % 100 == 0:
-            data.append([t] + [copy.deepcopy(k) for k in objects])
-    np.save(new_path + file, data, allow_pickle=True)
-"""
-
-
 def sim_loop(delta_t, iterations, method, sat, t=0):
     earth = Particle(
         position=np.array([0, 0, 0]),
