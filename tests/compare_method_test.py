@@ -46,6 +46,6 @@ def plot_paths(data, labels):
 
 
 dataset, names = retrieve_data("/method_test_data.npy")
-# print(dataset[1])
-# plot_paths(dataset, names)
+plot_paths(dataset, names)
+
 
