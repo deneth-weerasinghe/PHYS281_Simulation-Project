@@ -118,14 +118,22 @@ class Particle:
                 g += Particle.twoBodiesAcceleration(self, i, x_mid=x_mid)
         return np.array(g, dtype=float)
 
-    def kineticEnergy(self):
+    def getKineticEnergy(self):
         """
         Calculates and returns the kinetic energy of the particle
 
-        :return: kinetic energy
+        :return: float; kinetic energy
         """
         e_k = 0.5 * self.mass * np.linalg.norm(self.velocity) ** 2
         return e_k
+
+    def getMomentum(self):
+        """
+        Method for obtaining the momentum vector of the particle
+        :return: numpy array of floats; 3-vector of momentum
+        """
+        momentum = self.mass * self.velocity
+        return np.array(momentum, dtype=float)
 
     @staticmethod
     def getUnitVector(a):
