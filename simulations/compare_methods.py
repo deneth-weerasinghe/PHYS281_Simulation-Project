@@ -34,7 +34,7 @@ def generate_satellites():
     return satellites
 
 
-def sim_loop(delta_t, iterations, method, sat, t=0):
+def sim_loop(delta_t, itr, method, sat, t=0):
     earth = Particle(
         position=np.array([0, 0, 0]),
         velocity=np.array([0, 0, 0]),
@@ -44,10 +44,10 @@ def sim_loop(delta_t, iterations, method, sat, t=0):
     )
     data = []  # list to store contents that will be written to "TwoBodyTest.npy"
 
-    for k in range(1, iterations + 1):
+    for k in range(1, itr + 1):
 
         t += delta_t
-
+        # Acceleration can be calculated using TwoBodyAcceleration method instead, both are equal in a 2-body system
         sat.setAcceleration(sat.NBodyAcceleration([earth]))
         if method == 0:
             sat.updateEuler(delta_t)
@@ -65,19 +65,23 @@ def sim_loop(delta_t, iterations, method, sat, t=0):
 
 object_list = generate_satellites()
 
-data_1 = sim_loop(1, 3600 * 24 * 4, 0, object_list[0])
-data_2 = sim_loop(1, 3600 * 24 * 4, 1, object_list[1])
-data_3 = sim_loop(1, 3600 * 24 * 4, 2, object_list[2])
-data_4 = sim_loop(1, 3600 * 24 * 4, 3, object_list[3])
+iterations = 60 * 24 * 4 * 4  # one full orbit
+time_step = 60
+
+
+subdata_1 = sim_loop(time_step, iterations, 0, object_list[0])
+subdata_2 = sim_loop(time_step, iterations, 1, object_list[1])
+subdata_3 = sim_loop(time_step, iterations, 2, object_list[2])
+subdata_4 = sim_loop(time_step, iterations, 3, object_list[3])
 
 final_data = []
 
-for i in range(0, len(data_1)):
+for i in range(0, len(subdata_1)):
     final_data.append([
-        data_1[i],
-        data_2[i],
-        data_3[i],
-        data_4[i]
+        subdata_1[i],
+        subdata_2[i],
+        subdata_3[i],
+        subdata_4[i]
     ])
 
 np.save(new_path + "/method_test_data", final_data, allow_pickle=True)
