@@ -15,9 +15,9 @@ class GraphPlot:
         extracted_z = GraphPlot.getOneBodyVectorElements(positions, 2)
 
         self.times = np.array(times, dtype=float)
-        self.x = extracted_x
-        self.y = extracted_y
-        self.z = extracted_z
+        self.x = np.array(extracted_x, dtype=float)
+        self.y = np.array(extracted_y, dtype=float)
+        self.z = np.array(extracted_z, dtype=float)
 
     def drawTimeXGraph(self):
         """
@@ -60,21 +60,29 @@ class GraphPlot:
         return new_array
 
     @staticmethod
-    def retrieveData(path, file):
+    def retrieveData(data):
         """
         Retrieves data from a specified file in a specified subdirectory
-        :param path: the directory the data file is located in, in string
-        :param file: the filename of the data file, in string
+        :param data: raw data read from the storage file; list of Particle objects and times
         :return: list of position vectors (list of floats) of each object, names of the objects (list of strings)
         """
-        raw_data = np.load(path + file, allow_pickle=True)
-        processed_data = []
-        names = []
-        for i in raw_data:
-            temp = []
-            for j in range(1, len(i)):
-                if len(names) < len(i) - 1:  # generates separate list for the names of the objects
-                    names.append(i[j].name)
-                temp.append(i[j].position)
-            processed_data.append(temp)
-        return processed_data, names
+        # raw_data = np.load(path + file, allow_pickle=True)
+        pos = []
+        e_k = []
+        u = []
+        lin_p = []
+        ang_p = []
+        labels = []
+        times = []
+        for i in data:
+            temp_pos = []
+            temp_e_k = []
+            for j in range(1, len(i)):  # starts at 1 to ignore time
+                if len(labels) < len(i) - 1:  # generates separate list for the names of the objects
+                    labels.append(i[j].name)
+                temp_pos.append(i[j].position)
+                temp_e_k.append(i[j].getKineticEnergy())
+            pos.append(temp_pos)
+            e_k.append(temp_e_k)
+            times.append(i[0])
+        return labels

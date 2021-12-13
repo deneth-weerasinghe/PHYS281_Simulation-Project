@@ -20,6 +20,7 @@ def generate_data(delta_t, iterations, objects, file, t=0):
     data = []
 
     for i in range(1, iterations + 1):
+        print(str((i/(iterations + 1) * 100).__round__(1)) + "%")
 
         t += delta_t
         for j in objects:
@@ -50,5 +51,15 @@ t_0 = "2021-12-04 00:00:00.0"  # initial time from which to obtain the initial c
 solar_system = EphemeridesObjects(t_0, labels, raw_masses)
 solar_objects = solar_system.obtainObjects()
 
+# seconds in a day in 1 Julian year = 60 * 60 * 24 seconds = 86400 seconds hence timestep
+time_step = 86400
+
+# to simplify, I do not use a Julian year (364.25 days), instead using 365 days because the number of days is used as
+# the number of iterations, which needs to be an integer
+
 # simulate for 365 days, Earth should complete one full orbit
-generate_data(3600 * 24, 365 * 10, solar_objects, "/solar_test_data_1")
+# generate_data(time_step, 365 * 4 , solar_objects, "/solar_test_data_1")
+# simulate for 10 years (close to Jupiter's orbital period
+generate_data(time_step, 365 * 10, solar_objects, "/solar_test_data_1_10y")
+# simulate for Pluto's orbital period
+# generate_data(time_step * 31, 365 * int(248 / 31), solar_objects, "/solar_energy_test_1")

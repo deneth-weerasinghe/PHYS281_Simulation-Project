@@ -121,13 +121,12 @@ class Particle:
     def getKineticEnergy(self):
         """
         Calculates and returns the kinetic energy of the particle
-
         :return: float; kinetic energy
         """
         e_k = 0.5 * self.mass * np.linalg.norm(self.velocity) ** 2
         return e_k
 
-    def getMomentum(self):
+    def getLinearMomentum(self):
         """
         Method for obtaining the momentum vector of the particle
         :return: numpy array of floats; 3-vector of momentum
