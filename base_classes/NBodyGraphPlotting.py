@@ -33,7 +33,7 @@ class NBodyGraphPlotting:
         plt.xlabel("x-axis (m)")
         plt.ylabel("y-axis (m)")
         plt.title(title)
-        plt.legend()
+        plt.legend(loc=5)
 
     def threeDimPositionPlot(self, title="3D Plot"):
         """
@@ -56,44 +56,42 @@ class NBodyGraphPlotting:
         ax.set_zlabel("z-axis (m)")
         ax.set_title(title)
         plt.legend()
+        plt.show()
 
     def totalKineticEnergyPlot(self):
         """
         Draws the total kinetic energy of the system against time
         """
 
-        raw_e_k = []
+        e_k_list = []
 
         for i in self.data:
             temp = 0
             for j in range(1, len(i)):  # starts at 1 to ignore time
                 temp += i[j].getKineticEnergy()
-            raw_e_k.append(temp)
+            e_k_list.append(temp)
 
-        plt.plot(self.times, raw_e_k)
+        plt.plot(self.times, np.array(e_k_list, dtype=float))
         plt.xlabel("Time (s)")
         plt.ylabel("Total kinetic energy (J)")
         plt.title("Kinetic energy evolution")
-        plt.show()
 
-    # def plot_kinetic_energy_diff(self):
-    #     """
-    #     Draws the total kinetic energy of the system against time
-    #     :param time_data: list of int; list of times
-    #     :param raw_e_k_data: 2D list of kinetic energies of all objects at all times
-    #     """
-    #     tot_e_k_list = []
-    #     e_k_0 = 0
-    #     for i, sublist in enumerate(raw_e_k_data):
-    #         tot_e_k = 0
-    #         for e_k_i in sublist:
-    #             tot_e_k += e_k_i
-    #         if i == 0:
-    #             e_k_0 = tot_e_k  # total system energy at t=0
-    #         tot_e_k_list.append(tot_e_k)
-    #     print(e_k_0)
-    #     plt.plot(time_data, (np.array(tot_e_k_list) - e_k_0) / e_k_0)
-    #
-    #     plt.xlabel("Time (s)")
-    #     plt.ylabel("Normalised total kinetic energy (J)")
-    #     plt.title("Kinetic energy fluctuations")
+    def diffKineticEnergyPlot(self):
+        """
+        Draws the change in kinetic energy of the system against time
+        """
+
+        e_k_list = []
+
+        for i in self.data:
+            temp = 0
+            for j in range(1, len(i)):  # starts at 1 to ignore time
+                temp += i[j].getKineticEnergy()
+            e_k_list.append(temp)
+
+        e_k_init = e_k_list[0]
+
+        plt.plot(self.times, abs(np.array(e_k_list, dtype=float) - e_k_init)/e_k_init)
+        plt.xlabel("Time (s)")
+        plt.ylabel("Change in kinetic energy from $t_0$ (J)")
+        plt.title("Change in kinetic energy")
