@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-class GraphPlot:
+class GraphPlotting:
     """
     Class for creating graphs of the path of a single body
     """
@@ -10,9 +10,9 @@ class GraphPlot:
     def __init__(self, positions, times=None):
         if times is None:
             times = []
-        extracted_x = GraphPlot.getOneBodyVectorElements(positions, 0)
-        extracted_y = GraphPlot.getOneBodyVectorElements(positions, 1)
-        extracted_z = GraphPlot.getOneBodyVectorElements(positions, 2)
+        extracted_x = GraphPlotting.getOneBodyVectorElements(positions, 0)
+        extracted_y = GraphPlotting.getOneBodyVectorElements(positions, 1)
+        extracted_z = GraphPlotting.getOneBodyVectorElements(positions, 2)
 
         self.times = np.array(times, dtype=float)
         self.x = np.array(extracted_x, dtype=float)

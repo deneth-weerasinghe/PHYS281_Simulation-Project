@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from base_classes.GraphPlot import GraphPlot
+from base_classes.GraphPlotting import GraphPlotting
 
 new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
 
@@ -25,7 +25,7 @@ def plot_paths(data, labels):
         subset = []
         for i in data:  # looking at ith time saved
             subset.append(i[p])
-        graph = GraphPlot(subset)
+        graph = GraphPlotting(subset)
         graph.draw2DPositionGraph(label=labels[p])  # plots the path of a particle
     plt.xlabel("x (m)")
     plt.ylabel("y (m)")

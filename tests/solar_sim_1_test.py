@@ -1,7 +1,9 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from base_classes.GraphPlot import GraphPlot
+from base_classes.GraphPlotting import GraphPlotting
+from base_classes.NBodyGraphPlotting import NBodyGraphPlotting
+
 
 new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
 
@@ -12,7 +14,7 @@ def three_d_plot_paths(data, labels):
 
     for i in data:
         temp_pos = []
-        for j in range(1, len(i)):  # starts at 1 to ignore time
+        for j in range(1, len(i)):  # fetch objects, starts at 1 to ignore time
             temp_pos.append(i[j].position)
         pos.append(temp_pos)
 
@@ -20,7 +22,7 @@ def three_d_plot_paths(data, labels):
         subset = []
         for i in pos:  # looking at ith time saved
             subset.append(i[p])
-        graph = GraphPlot(subset)
+        graph = GraphPlotting(subset)
         graph.draw3DPositionGraph(ax, label=labels[p])
     ax.set_xlabel("x-axis (m)")
     ax.set_ylabel("y-axis (m)")
@@ -43,7 +45,7 @@ def two_d_plot_paths(data, labels):
         subset = []
         for i in pos:  # looking at ith time saved
             subset.append(i[p])
-        graph = GraphPlot(subset)
+        graph = GraphPlotting(subset)
         graph.draw2DPositionGraph(label=labels[p])
     plt.xlabel("x-axis (m)")
     plt.ylabel("y-axis (m)")
@@ -64,7 +66,6 @@ def plot_total_kinetic_energy(data):
         temp = 0
         for j in range(1, len(i)):  # starts at 1 to ignore time
             temp += i[j].getKineticEnergy()
-            print(i[j].getKineticEnergy())
         raw_e_k.append(temp)
         times.append(i[0])
 
@@ -102,13 +103,18 @@ def plot_kinetic_energy_diff(time_data, raw_e_k_data):
 my_data = np.load(new_path + "/solar_test_data_1.npy", allow_pickle=True)
 my_data_2 = np.load(new_path + "/solar_energy_test_1.npy", allow_pickle=True)
 
-# names = GraphPlot.retrieveData(my_data)
+euler_sim = NBodyGraphPlotting(my_data_2)
+# euler_sim.twoDimPositionPlot()
+# euler_sim.threeDimPositionPlot()
+euler_sim.totalKineticEnergyPlot()
 
-# two_d_plot_paths(my_data, names)
+plt.show()
+
+
 # three_d_plot_paths(my_data, names)
 # plt.figure()
 # plt.subplot(211)
-plot_total_kinetic_energy(my_data_2)
+# plot_total_kinetic_energy(my_data_2)
 # plt.subplot(212)
 # plot_kinetic_energy_diff(times, energy_data)
 # plt.tight_layout()
