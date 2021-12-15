@@ -3,19 +3,26 @@ import matplotlib.pyplot as plt
 
 
 class NBodyGraphPlotting:
+    """
+    Class used to generate every plot for each complete system dataset, rather than for individual solar objects
+    unlike GraphPlotting.py.
+
+    -------------------
+        Includes plots for:
+            * 2D position
+            * 3D position
+            * total kinetic energy over time
+            * percentage errors in kinetic, potential and total energy
+            * linear momentum
+    -------------------
+    Constructor:
+        Receives a dataset consisting of deep copies of all objects at all times, pulled from a file in ./data_files/
+    """
 
     def __init__(self, data):
         self.data = data
-        self.labels = self.getLabels()
-        self.times = [i[0] for i in data]
-
-    def getLabels(self):
-        labels = []
-        for i in self.data:
-            for j in range(1, len(i)):  # starts at 1 to ignore time
-                if len(labels) < len(i) - 1:  # generates separate list for the names of the objects
-                    labels.append(i[j].name)
-        return labels
+        self.labels = [i.name for i in self.data[0][1:]]  # labels are used often, so the list of labels is stored as a class attribute
+        self.times = [i[0] for i in data]  # likewise with the list of times
 
     def twoDimPositionPlot(self, title="2D Plot"):
         """
@@ -66,32 +73,38 @@ class NBodyGraphPlotting:
         e_k_list = []
 
         for i in self.data:
-            temp = 0
-            for j in range(1, len(i)):  # starts at 1 to ignore time
-                temp += i[j].getKineticEnergy()
-            e_k_list.append(temp)
+            e_k = 0
+            for j in i[1:]:  # starts at 1 to ignore time
+                e_k += j.getKineticEnergy()
+            e_k_list.append(e_k)
 
         plt.plot(self.times, np.array(e_k_list, dtype=float))
         plt.xlabel("Time (s)")
         plt.ylabel("Total kinetic energy (J)")
         plt.title("Kinetic energy evolution")
 
-    def diffKineticEnergyPlot(self):
+    def kineticAndPotentialEnergyPlot(self):
         """
         Draws the change in kinetic energy of the system against time
         """
 
         e_k_list = []
+        u_e_list = []
 
         for i in self.data:
-            temp = 0
-            for j in range(1, len(i)):  # starts at 1 to ignore time
-                temp += i[j].getKineticEnergy()
-            e_k_list.append(temp)
-
-        e_k_init = e_k_list[0]
-
-        plt.plot(self.times, abs(np.array(e_k_list, dtype=float) - e_k_init)/e_k_init)
+            e_k = 0
+            u_e = 0
+            for j in i[1:]:  # starts at 1 to ignore time
+                e_k += j.getKineticEnergy()
+                u_e += j.getPotentialEnergy(i[1:])
+            e_k_list.append(e_k)
+            u_e_list.append(u_e)
+        e_k_list = np.array(e_k_list)
+        u_e_list = np.array(u_e_list)
+        tot_energy = e_k_list + u_e_list
+        plt.plot(self.times, ((tot_energy - tot_energy[0]) / tot_energy[0]) * 100, label="Total energy")
+        plt.plot(self.times, ((e_k_list - e_k_list[0]) / e_k_list[0]) * 100, label="Kinetic energy")
+        plt.plot(self.times, ((u_e_list - u_e_list[0]) / u_e_list[0]) * 100, label="Potential energy")
         plt.xlabel("Time (s)")
-        plt.ylabel("Change in kinetic energy from $t_0$ (J)")
-        plt.title("Change in kinetic energy")
+        plt.ylabel("Percentage error")
+        plt.title("Percentage error in energy")
