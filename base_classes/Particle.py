@@ -3,6 +3,18 @@ from astropy.constants import G
 
 
 class Particle:
+    """
+    Class for generating objects that undergo gravitation.
+
+    ___________
+    Constructor
+
+    :param position: position of particle at t=0; 3D vector as a float numpy array
+    :param velocity: velocity of particle at t=0; 3D vector as a float numpy array
+    :param acceleration: acceleration of particle at t=0; 3D vector as a float numpy array
+    :param name: string; identifier for particle
+    :param mass: float; mass of particle, assume no relativistic effects
+    """
 
     def __init__(self,
                  position=np.array([0, 0, 0], dtype=float),
@@ -11,15 +23,6 @@ class Particle:
                  name="Ball",
                  mass=1.0,
                  ):
-        """
-        Constructor
-
-        :param position: position of particle at t=0; 3D vector as a numpy array
-        :param velocity: velocity of particle at t=0; 3D vector as a numpy array
-        :param acceleration: acceleration of particle at t=0; 3D vector as a numpy array
-        :param name: identifier for particle
-        :param mass: mass of particle; assume no relativistic effects on mass
-        """
 
         # class variables
         self.name = name
@@ -32,6 +35,9 @@ class Particle:
         return "Particle: {0}, Mass: {1:.3e}, Position: {2}, Velocity: {3}, Acceleration: {4}".format(
             self.name, self.mass, self.position, self.velocity, self.acceleration
         )
+
+    def setAcceleration(self, g):
+        self.acceleration = np.array(g, dtype=float)
 
     def updateEuler(self, delta_t):
         """
@@ -66,23 +72,19 @@ class Particle:
         self.velocity += a_mid * delta_t
         self.position += v_mid * delta_t
 
-    def updateVerler(self, delta_t, objects):
+    def updateVerlet(self, delta_t, objects):
         """
-        Verler method for updating position and velocity: position is calculate according to classical kinematics and
-        velocity requires both the current acceleration (saved in a dummy variable) and the updated acceleration using
+        Verlet method for updating position and velocity: position is calculated according to classical kinematics and
+        velocity requires both the current acceleration and the next acceleration (stored in a dummy variable) using
         the newly updated position
         :param delta_t: integer; time interval
         :param objects: list of Particle objects, used as a argument for the new acceleration
-        :return:
         """
         current_a = self.acceleration
 
-        self.position += self.velocity * delta_t + 0.5 * self.acceleration * delta_t ** 2
+        self.position += self.velocity * delta_t + 0.5 * current_a * delta_t ** 2
         self.setAcceleration(self.NBodyAcceleration(objects))
         self.velocity += 0.5 * (self.acceleration + current_a) * delta_t
-
-    def setAcceleration(self, g):
-        self.acceleration = np.array(g, dtype=float)
 
     def twoBodiesAcceleration(self, body, richardson=False, x_mid=None):
         """
@@ -98,9 +100,8 @@ class Particle:
             temp_pos = x_mid
 
         relative_position = temp_pos - body.position
-        # print(relative_position)
         scalar_distance = np.linalg.norm(temp_pos - body.position)
-        g = - ((G * body.mass) / (scalar_distance ** 2)) * Particle.getUnitVector(relative_position)
+        g = - (G * body.mass / (scalar_distance ** 2)) * Particle.getUnitVector(relative_position)
         return np.array(g, dtype=float)
 
     def NBodyAcceleration(self, objects, x_mid=None):
@@ -125,6 +126,19 @@ class Particle:
         """
         e_k = 0.5 * self.mass * np.linalg.norm(self.velocity) ** 2
         return e_k
+
+    def getPotentialEnergy(self, objects):
+        """
+        Calculate and returns the gravitational potential energy of the particle
+        :param objects: list of Particle objects from which to calculate the potential energy
+        :return: float, gravitational potential energy
+        """
+        u_e = 0
+        for i in objects:
+            if i != self:
+                scalar_distance = np.linalg.norm(self.position - i.position)
+                u_e += (- G * self.mass * i.mass / scalar_distance).value
+        return u_e
 
     def getLinearMomentum(self):
         """
