@@ -56,7 +56,7 @@ def sim_loop(delta_t, itr, method, sat, t=0):
         elif method == 2:
             sat.updateEulerRichardson(delta_t, [earth])
         elif method == 3:
-            sat.updateVerler(delta_t, [earth])
+            sat.updateVerlet(delta_t, [earth])
 
         if (k - 1) % 100 == 0:  # which values of i should be considered when storing data
             data.append(copy.deepcopy(sat))
