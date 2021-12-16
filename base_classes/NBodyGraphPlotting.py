@@ -16,7 +16,8 @@ class NBodyGraphPlotting:
             * linear momentum
     -------------------
     Constructor:
-        Receives a dataset consisting of deep copies of all objects at all times, pulled from a file in ./data_files/
+        :param data: a dataset consisting of deep copies of all objects at all times, pulled from a numpy
+        binary file file in ./data_files/
     """
 
     def __init__(self, data):
@@ -44,7 +45,7 @@ class NBodyGraphPlotting:
 
     def threeDimPositionPlot(self, title="3D Plot"):
         """
-        Draws the path of all objects in x-y-z space
+        Draws the path of all objects in the x-y-z space
         """
         ax = plt.axes(projection="3d")  # required to make 3D plots
 
@@ -85,7 +86,7 @@ class NBodyGraphPlotting:
 
     def kineticAndPotentialEnergyPlot(self):
         """
-        Draws the change in kinetic energy of the system against time
+        Draws the percentage change in kinetic energy of the system compared to energy at t=0, against time
         """
 
         e_k_list = []

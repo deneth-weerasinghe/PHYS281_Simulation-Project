@@ -9,32 +9,35 @@ from poliastro import constants
 
 class EphemeridesObjects:
     """
-    Stores initial conditions pulled from JPL to be used for instances of Particle
+    Class that stores initial conditions pulled from the JPL Ephemeris to be used for instantiating the Particle class
+
+    -----------
+    Constructor
+    :param raw_t_0: string; the real date and time of the initial conditions, i.e. t_0
+    :param simulated_objects: dictionary containing the string name of each simulated object and the corresponding
+    masses, the latter pulled from poliastro
+    this is preferable to pulling the actual mass as it is less accurate than mass * G in the Ephemeris3
     """
 
-    def __init__(self, raw_t_0="2021-12-04 00:00:00.0", labels=None, raw_masses=None):
+    def __init__(self, raw_t_0="2021-12-04 00:00:00.0", simulated_objects=None
+                 ):
 
         #  default values; this format of setting default values has been suggested by my IDE
-        if raw_masses is None:
-            raw_masses = [constants.GM_sun,
-                          constants.GM_mercury,
-                          constants.GM_venus,
-                          constants.GM_earth,
-                          constants.GM_moon,
-                          constants.GM_mars,
-                          constants.GM_jupiter,
-                          constants.GM_saturn,
-                          constants.GM_uranus,
-                          constants.GM_neptune,
-                          constants.GM_pluto,
-                          ]
-        if labels is None:
-            labels = ["Sun", "Mercury", "Venus", "Earth", "Moon", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune",
-                      "Pluto"]
 
+        if simulated_objects is None:
+            simulated_objects = {"Sun": constants.GM_sun,
+                                 "Mercury": constants.GM_mercury,
+                                 "Venus": constants.GM_venus,
+                                 "Earth": constants.GM_earth,
+                                 "Mars": constants.GM_mars,
+                                 "Jupiter": constants.GM_jupiter,
+                                 "Saturn": constants.GM_saturn,
+                                 "Uranus": constants.GM_uranus,
+                                 "Neptune": constants.GM_neptune,
+                                 "Pluto": constants.GM_pluto}
         self.t_0 = Time(raw_t_0, scale="tdb")
-        self.labels = labels
-        self.raw_masses = raw_masses
+        self.labels = list(simulated_objects.keys())
+        self.raw_masses = list(simulated_objects.values())
 
     def getInitialConditions(self, obj):
         """

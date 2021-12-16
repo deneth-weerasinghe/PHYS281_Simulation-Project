@@ -5,6 +5,11 @@ import numpy as np
 class GraphPlotting:
     """
     Class for creating graphs of the path of a single body
+
+    __________
+    Constructor
+    :param positions: list of floats; list of positions at every saved time
+    :param: times: list of integers; list of times
     """
 
     def __init__(self, positions, times=None):
