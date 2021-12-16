@@ -1,8 +1,7 @@
 import numpy as np
-
+from astropy.constants import G
 # x = np.array([2,3])
 #
-# y = (x - [1, 1]) / 2
-# print(y)
-x = np.array([2, 56])
-print((x-2)/2)
+x = [2,6]
+y = [3,3]
+print(x + y)
