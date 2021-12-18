@@ -22,7 +22,8 @@ class NBodyGraphPlotting:
 
     def __init__(self, data):
         self.data = data
-        self.labels = [i.name for i in self.data[0][1:]]  # labels are used often, so the list of labels is stored as a class attribute
+        self.labels = [i.name for i in
+                       self.data[0][1:]]  # labels are used often, so the list of labels is stored as a class attribute
         self.times = [i[0] for i in data]  # likewise with the list of times
 
     def twoDimPositionPlot(self, title="2D Plot"):
@@ -95,7 +96,7 @@ class NBodyGraphPlotting:
         for i in self.data:
             e_k = 0
             u_e = 0
-            for j in i[1:]:  # starts at 1 to ignore time
+            for j in i[1:]:  # starts at 1 to ignore time; gets all the energies of each object at time snapshot i
                 e_k += j.getKineticEnergy()
                 u_e += j.getPotentialEnergy(i[1:])
             e_k_list.append(e_k)
@@ -103,9 +104,45 @@ class NBodyGraphPlotting:
         e_k_list = np.array(e_k_list)
         u_e_list = np.array(u_e_list)
         tot_energy = e_k_list + u_e_list
-        plt.plot(self.times, ((tot_energy - tot_energy[0]) / tot_energy[0]) * 100, label="Total energy")
-        plt.plot(self.times, ((e_k_list - e_k_list[0]) / e_k_list[0]) * 100, label="Kinetic energy")
-        plt.plot(self.times, ((u_e_list - u_e_list[0]) / u_e_list[0]) * 100, label="Potential energy")
+        plt.plot(self.times, (e_k_list - e_k_list[0]) * 100 / e_k_list[0], label="Kinetic energy", color="g")
+        plt.plot(self.times, (u_e_list - u_e_list[0]) * 100 / u_e_list[0], label="Potential energy", color="b")
+        plt.plot(self.times, (tot_energy - tot_energy[0]) * 100 / tot_energy[0], label="Total energy", color="r")
         plt.xlabel("Time (s)")
         plt.ylabel("Percentage error")
         plt.title("Percentage error in energy")
+
+    def totalLinearMomentum(self):
+        """
+        Draws the total system linear momentum against time
+        """
+
+        tot_vec_list = []
+
+        for i in self.data:
+            tot_vec_t = np.array([0, 0, 0], dtype=float)
+            for j in i[1:]:  # get all the momenta of each object at time snapshot i
+                tot_vec_t += j.getLinearMomentum()  # add the individual vectors before calculating the norm
+            tot_vec_list.append(np.linalg.norm(tot_vec_t))
+        tot_vec_list = np.array(tot_vec_list)
+        plt.plot(self.times, tot_vec_list, label="Total linear momentum")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Linear momentum ($kg ms^(-1)$)")
+        plt.title("Linear momentum evolution")
+
+    def percentageLinearMomentum(self):
+        """
+        Draws the total system linear momentum against time
+        """
+
+        tot_vec_list = []
+
+        for i in self.data:
+            tot_vec_t = np.array([0, 0, 0], dtype=float)
+            for j in i[1:]:  # get all the momenta of each object at time snapshot i
+                tot_vec_t += j.getLinearMomentum()  # add the individual vectors before calculating the norm
+            tot_vec_list.append(np.linalg.norm(tot_vec_t))
+        tot_vec_list = np.array(tot_vec_list)
+        plt.plot(self.times, (tot_vec_list - tot_vec_list[0]) * 100 / tot_vec_list[0], label="Total linear momentum")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Linear momentum ($kg ms^-1$) ")
+        plt.title("Linear momentum evolution")
