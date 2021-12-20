@@ -1,7 +1,11 @@
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 from base_classes.Particle import Particle
+
+path = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())), "plots")
 
 # initialise your particle
 Ball = Particle(
@@ -40,8 +44,10 @@ print(max(y))
 print(len(times))
 
 # plot the data
+fig = plt.figure()
 plt.plot(times, y, "-r", label='trajectory')
 plt.xlabel('time (s)')
 plt.ylabel('y-position (m)')
 plt.legend()
 plt.show()
+fig.savefig(path + "/proj_motion.png")
