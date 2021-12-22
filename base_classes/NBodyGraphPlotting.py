@@ -95,7 +95,7 @@ class NBodyGraphPlotting:
         for i in self.data:
             e_k = 0
             u_e = 0
-            for j in i[1:]:  # starts at 1 to ignore time
+            for j in i[1:]:  # starts at 1 to ignore time; gets all the energies of each object at time snapshot i
                 e_k += j.getKineticEnergy()
                 u_e += j.getPotentialEnergy(i[1:])
             e_k_list.append(e_k)
@@ -116,3 +116,39 @@ class NBodyGraphPlotting:
         plt.xlabel("Time (s)")
         plt.ylabel("Percentage error")
         plt.title("Percentage error in energy")
+
+    def totalLinearMomentum(self):
+        """
+        Draws the total system linear momentum against time
+        """
+
+        tot_vec_list = []
+
+        for i in self.data:
+            tot_vec_t = np.array([0, 0, 0], dtype=float)
+            for j in i[1:]:  # get all the momenta of each object at time snapshot i
+                tot_vec_t += j.getLinearMomentum()  # add the individual vectors before calculating the norm
+            tot_vec_list.append(np.linalg.norm(tot_vec_t))
+        tot_vec_list = np.array(tot_vec_list)
+        plt.plot(self.times, tot_vec_list, label="Total linear momentum")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Linear momentum ($kg ms^(-1)$)")
+        plt.title("Linear momentum evolution")
+
+    def percentageLinearMomentum(self):
+        """
+        Draws the total system linear momentum against time
+        """
+
+        tot_vec_list = []
+
+        for i in self.data:
+            tot_vec_t = np.array([0, 0, 0], dtype=float)
+            for j in i[1:]:  # get all the momenta of each object at time snapshot i
+                tot_vec_t += j.getLinearMomentum()  # add the individual vectors before calculating the norm
+            tot_vec_list.append(np.linalg.norm(tot_vec_t))
+        tot_vec_list = np.array(tot_vec_list)
+        plt.plot(self.times, (tot_vec_list - tot_vec_list[0]) * 100 / tot_vec_list[0], label="Total linear momentum")
+        plt.xlabel("Time (s)")
+        plt.ylabel("Linear momentum ($kg ms^-1$) ")
+        plt.title("Linear momentum evolution")

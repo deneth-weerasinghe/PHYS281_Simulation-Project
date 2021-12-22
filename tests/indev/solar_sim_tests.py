@@ -25,9 +25,13 @@ def energy_tests(graph_object, years_str):
 euler_data = np.load(new_path + "/284y_euler.npy", allow_pickle=True)
 verlet_data = np.load(new_path + "/284y_verlet.npy", allow_pickle=True)
 
-
+years = "248"
 # test_set_euler_284y = NBodyGraphPlotting(euler_data)
 test_set_verlet = NBodyGraphPlotting(verlet_data)
 
 # print(test_set_verlet.labels)
-energy_tests(test_set_verlet, "284")
+energy_tests(test_set_verlet, years)
+# test_set_verlet.totalLinearMomentum()
+# test_set_verlet.percentageLinearMomentum()
+# plt.legend()
+# plt.show()
