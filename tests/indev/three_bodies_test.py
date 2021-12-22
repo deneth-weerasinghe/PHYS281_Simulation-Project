@@ -13,7 +13,7 @@ def retrieve_data(file):
     for i in raw_data:
         temp = []
         for j in range(1, len(i)):
-            if len(names) < len(i) - 1:  # generates separate lists for the names and colours of the objects
+            if len(names) < len(i) - 1:  # generates separate lists for the names of the objects
                 names.append(i[j].name)
             temp.append(i[j].position)
         processed_data.append(temp)

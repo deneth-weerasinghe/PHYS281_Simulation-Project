@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from base_classes.NBodyGraphPlotting import NBodyGraphPlotting
 
 
-new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
+new_path = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())), "data_files")
 
 
 def energy_tests(graph_object, years_str):
@@ -25,9 +25,9 @@ def energy_tests(graph_object, years_str):
 euler_data = np.load(new_path + "/284y_euler.npy", allow_pickle=True)
 verlet_data = np.load(new_path + "/284y_verlet.npy", allow_pickle=True)
 
-years = "10"
+
 # test_set_euler_284y = NBodyGraphPlotting(euler_data)
 test_set_verlet = NBodyGraphPlotting(verlet_data)
 
 # print(test_set_verlet.labels)
-# energy_tests(test_set_verlet, years)
+energy_tests(test_set_verlet, "284")

@@ -65,7 +65,7 @@ def sim_loop(delta_t, itr, method, sat, t=0):
 
 object_list = generate_satellites()
 
-iterations = 60 * 24 * 4 * 4  # one full orbit
+iterations = 60 * 24 * 4 # one full orbit
 time_step = 60
 
 

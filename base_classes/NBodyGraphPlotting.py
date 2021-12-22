@@ -103,9 +103,16 @@ class NBodyGraphPlotting:
         e_k_list = np.array(e_k_list)
         u_e_list = np.array(u_e_list)
         tot_energy = e_k_list + u_e_list
-        plt.plot(self.times, ((tot_energy - tot_energy[0]) / tot_energy[0]) * 100, label="Total energy")
-        plt.plot(self.times, ((e_k_list - e_k_list[0]) / e_k_list[0]) * 100, label="Kinetic energy")
-        plt.plot(self.times, ((u_e_list - u_e_list[0]) / u_e_list[0]) * 100, label="Potential energy")
+
+        y1_values = [(e_k_list[0] - i) * 100 / e_k_list[0] for i in e_k_list]
+        y2_values = [(u_e_list[0] - i) * 100 / u_e_list[0] for i in u_e_list]
+        y3_values = [(tot_energy[0] - i) * 100 / tot_energy[0] for i in tot_energy]
+
+        plt.plot(self.times, y1_values, "--", label="Kinetic energy")
+        plt.plot(self.times, y2_values, "--", label="Potential energy")
+        plt.plot(self.times, y3_values, label="Total energy", color="r")
+
+        print(sum(y1_values) / len(y1_values))
         plt.xlabel("Time (s)")
         plt.ylabel("Percentage error")
         plt.title("Percentage error in energy")

@@ -2,9 +2,9 @@ import numpy as np
 import copy
 import os
 from base_classes.Particle import Particle
+from astropy.constants import G
 
 new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
-
 
 def satellite_system_objects():
     """
@@ -21,7 +21,7 @@ def satellite_system_objects():
         mass=earth_mass
     )
     sat_position = earth_radius + (35786 * 1e3)
-    sat_velocity = np.sqrt(earth.G * earth.mass / sat_position)  # from centrifugal force = gravitational force
+    sat_velocity = np.sqrt(G.value * earth.mass / sat_position)  # from centrifugal force = gravitational force
     satellite = Particle(
         position=np.array([sat_position, 0, 0]),
         velocity=np.array([0, sat_velocity, 0]),
@@ -75,5 +75,5 @@ def simulation_loop(delta_t, iterations, object_1, object_2, file, t=0):
 Earth, satellite_1 = satellite_system_objects()
 two_bodies_euler_loop(1, 3600 * 24 * 4, Earth, satellite_1, "/two_body_test")
 
-Earth_2, satellite_2 = satellite_system_objects()
-simulation_loop(1, 3600 * 24 * 4, Earth_2, satellite_2, "/cromer_test")
+# Earth_2, satellite_2 = satellite_system_objects()
+# simulation_loop(1, 3600 * 24 * 4, Earth_2, satellite_2, "/cromer_test")

@@ -11,7 +11,7 @@ def generate_data(delta_t, iterations, objects, file, method=0, t=0):
     """
     Simulation loop for a 3 body system.
 
-    :param method: which Particle method to use for updating the position of the object
+    :param method: which Particle method to use for updating the position of the object; Euler by default
     :param delta_t: smallest unit of time in the simulation
     :param iterations: how many times should the particles update
     :param objects: list of Particle objects
@@ -54,23 +54,23 @@ t_0 = "2021-12-04 00:00:00.0"  # initial time from which to obtain the initial c
 solar_system = EphemeridesObjects(t_0, celestial_objects)
 solar_objects = solar_system.obtainObjects()
 
-# seconds in a day of a Julian year i.e. 60 * 60 * 24 seconds = 86400 seconds hence the time step
+# default timestep; seconds in a day in a Julian year i.e. 60 * 60 * 24 seconds = 86400 s
 time_step = 86400
-
-"""
-To simplify, I do not use a Julian year (364.25 days), instead using 365 days because the number of days is used as
-the number of iterations, which needs to be an integer
-"""
-
 
 """
 method key argument specifies which method to use to update the position of the object
 method: [0, 1, 2, 3] for Euler, Euler-Cromer, Euler-Richardson, Verlet, method = 0 by default
 """
-# simulate for 365 days, Earth should complete one full orbit
-# generate_data(time_step, 365 * 4, solar_objects, "/4y_euler")
-# simulate for 10 years (close to Jupiter's orbital period
-# generate_data(time_step, 365 * 10, solar_objects, "/10y_verlet", method=3)
-# simulate for Pluto's orbital period
-generate_data(time_step * 5, 365 * int(248 / 5), solar_objects, "/284y_verlet", method=3)
-# generate_data(time_step * 5, 365 * int(284 / 5), solar_objects, "/284y_euler")
+generate_data(time_step, 365 * 10, solar_objects, "/10y_euler")  # 10 year simulation with Euler
+
+# high time step, low iterations
+generate_data(time_step * 31, int(248 / 8), solar_objects, "/248y_euler_high")
+generate_data(time_step * 31, int(248 / 8), solar_objects, "/248y_euler_cromer_high", method=1)
+generate_data(time_step * 31, int(248 / 8), solar_objects, "/248y_euler_richardson_high", method=2)
+generate_data(time_step * 31, int(248 / 8), solar_objects, "/248y_verlet_high", method=3)
+
+# low time step, high iterations
+generate_data(time_step * 8, int(248 / 31), solar_objects, "/248y_euler")
+generate_data(time_step * 8, int(248 / 31), solar_objects, "/248y_euler_cromer", method=1)
+generate_data(time_step * 8, int(248 / 31), solar_objects, "/248y_euler_richardson", method=2)
+generate_data(time_step * 8, int(248 / 31), solar_objects, "/248y_verlet", method=3)
