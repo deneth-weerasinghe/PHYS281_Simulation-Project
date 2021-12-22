@@ -8,6 +8,7 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{siunitx}
 
 % Document
 \begin{document}
@@ -18,27 +19,83 @@
 
     \title{\textbf{PHYS281: Coding and Modelling Project Report}}
     \author{\textbf{Deneth Weerasinghe,}\\
-                    Lancaster University\\
-                    d.weerasinghe@lancaster.ac.uk}
+    Lancaster University\\
+    d.weerasinghe@lancaster.ac.uk}
 
     \date{
-    \parbox{\linewidth}{
-        \centering
-        Github repository:\\
-        \url{https://github.com/deneth-weerasinghe/PHYS281_Simulation-Project}\\
-        \bigskip
-        \today
-    }}
+        \parbox{\linewidth}{
+            \centering
+            Github repository:\\
+            \url{https://github.com/deneth-weerasinghe/PHYS281_Simulation-Project}\\
+            \bigskip
+            \today
+        }}
 
     \maketitle
 
     \begin{abstract}
-Example abstract test
+        \noindent
+        In this report, we describe to which degree a simple, 3D n-body system of gravitating particles, written in Python, can simulate gravitation.
+        This is done by modelling a simulation of the solar system as 10 point-like particles, consisting of the Sun, the planets and Pluto.
+        The position of the particles are updated using a variety of integration methods, being Euler, Euler-Cromer, Euler-Richardson and Verlet, each with their sets of accuracies.
+        Results of this simulation using each method is compared to real data of the positions and velocities of solar objects from NASA's Jet Propulsion Laboratory (JPL) dataset[1]x and further insight is gained from analysing the conserved quantities
+        of total energy and linear momentum.
+
     \end{abstract}
+
     \tableofcontents
+
+
     \section{Introduction}\label{sec:intro}
-This is the introduction section of my report
+
+    \subsection{Newtonian gravitation}\label{subsec:newtonian-gravitation}
+    This project attempts to simulate the motion of any number of bodies using Newtonian gravity as its underlying model, thus operating under classical mechanics.\\
+    In this model of gravitation, the gravitational force $\vec{F}$ acting on a body of mass $m_1$ due to a body of mass $m_2$ is proportional
+    to the product of those masses and is a function of the distance $|\vec{r}|$ between those two bodies, as shown in the following\cite{newton1999principia}:
+    \begin{equation}
+        \vec{F} = \frac{Gm_{1}m_{2}}{|\vec{r}|}\hat{r}\label{eq:equation1}
+    \end{equation}
+    Here, $G$ is the constant of proportionality of this relation, known as the gravitational constant.
+    This value has been derived empirically.
+    One of the first times it was derived was via the 1798 Cavendish experiment, which indirectly determined the value of G as $6.74 \times 10^{-11} \si{m^{3}.kg^{-1}.s^{-1}}$\cite{cavendish}.\\
+    As seen, this is an example of the inverse square law: the force does not scale linearly but rather decreases quadratically as distance between bodies increase.
+    As such, the resulting gravitational field is radial and infinite;
+    no matter how small the masses involved are or how large the distances between bodies are, the force of gravity still acts on an object.\\
+    The gravitational acceleration is then simply derived from $\vec{F} = m\vec{a}$ as per Newton's second law.
+
+    \subsection{Modelling and Limitations}\label{subsec:modelling}
+    True for all simulations, there are abstractions to be used in order to greatly simplify the model.
+    This will inevitably give rise to error when comparing the results to empirical data which will have to be taken into account when discussing results.\\
+    The first abstraction is to model all gravitating objects as point-like particles with no physical dimensions.
+    The simplification is justified in this model due to the scale used for the simulation.
+    In celestial contexts such as the solar system, the lengths of object is negligible when compared to the vast distances between each of them.
+    For instance, consider the radius of the largest body in this simulation, the Sun, 696,342 \si{km}\cite{2012ApJ...750..135E}.
+    This is only 1.2\% of Mercury's semi-major axis of 57,909,050 \si{km}\cite{JPL2}.
+    As a result, this leads to inaccurate results when objects enter the volume that would be occupied by another object, as collision is what should happen.\\
+    Another abstraction is disregarding relativistic effects and continuing to use classical mechanics despite it being superseded by general relativity.
+    This is justified by relativistic contributions being negligible as no object travels at relativistic speeds in this simulation.
+    However, an observable incongruity with Newtonian mechanics is the precession of the perihelion of Mercury's orbit,
+    which has been demonstrated to have been caused by the significant curvature of spacetime around the Sun\cite{1916AnP...354..769E}.
+    This will not be reflected in the simulation.\\
+    The simulation will also run using time steps (denoted as $\Delta t$).
 
 
+    \subsection{Numerical Methods}\label{subsec:numerical-methods}
+    In order to simulate the motion in a system, that is to calculate the positions, velocities and accelerations of all bodies at all times $t$,
+    we need to estimate them using numerical methods for ordinary first-order differential equations.
+    These are only approximations of the equations of motion and will give rise to inevitable margins of error, different for each of the methods used.
+    \subsubsection{Euler}
+    This is the Euler method
 
+    \subsubsection{Euler-Cromer}
+    This is the Euler-Cromer method
+
+    \subsubsection{Euler-Richardson}
+    This is the Euler-Richardson
+
+    \subsubsection{Verlet}
+    This is the Verlet Method
+
+    \bibliographystyle{vancouver}
+    \bibliography{report_bib}
 \end{document}
