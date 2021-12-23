@@ -1,5 +1,5 @@
 from poliastro import constants
-
+from matplotlib import pyplot as plt
 
 simulated_objects = {"Sun": constants.GM_sun,
                      "Mercury": constants.GM_mercury,
@@ -13,4 +13,5 @@ simulated_objects = {"Sun": constants.GM_sun,
                      "Pluto": constants.GM_pluto}
 
 x = list(simulated_objects.values())
-print(x)
+# print(x)
+print(plt.rcParams.keys())

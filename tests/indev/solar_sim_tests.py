@@ -3,35 +3,42 @@ import numpy as np
 import matplotlib.pyplot as plt
 from base_classes.NBodyGraphPlotting import NBodyGraphPlotting
 
+new_path = os.path.dirname(os.path.dirname(os.getcwd()))
 
-new_path = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())), "data_files")
+
+def position_tests(graph_object, years_str):
+    fig = plt.figure(figsize=[5, 5])
+    param = {"font.size": 15}
+    plt.rcParams.update(param)
+
+    graph_object.threeDimPositionPlot("System Evolution over {} years, 3D".format(years_str))
 
 
-def energy_tests(graph_object, years_str):
-
-    # graph_object.threeDimPositionPlot("System Evolution, 3D")
-
-    plt.figure(constrained_layout=True)
-    plt.subplot(311)
-    graph_object.twoDimPositionPlot("System evolution over " + years_str + " years, 2D")
-    plt.subplot(312)
-    graph_object.totalKineticEnergyPlot()
-    plt.subplot(313)
+def energy_tests(graph_object, filename):
+    # fig = plt.figure(constrained_layout=True)
+    # param = {"font.size": 15}
+    # plt.rcParams.update(param)
+    # plt.subplot(211)
+    # graph_object.percentageLinearMomentum()
+    # plt.subplot(212)
     graph_object.kineticAndPotentialEnergyPlot()
-    plt.legend()
-    plt.show()
+    # plt.legend()
+    # plt.show()
+    # fig.savefig(new_path + "/plots" + filename.replace("npy", "png"))
 
 
-euler_data = np.load(new_path + "/284y_euler.npy", allow_pickle=True)
-verlet_data = np.load(new_path + "/284y_verlet.npy", allow_pickle=True)
+# final plotting:
+filenames = ["/248y_euler.npy",
+             "/248y_euler_high.npy",
+             "/248y_euler_cromer.npy",
+             "/248y_euler_cromer_high.npy",
+             "/248y_euler_richardson.npy",
+             "/248y_euler_richardson_high.npy",
+             "/248y_verlet.npy",
+             "/248y_verlet_high.npy"]
 
-years = "248"
-# test_set_euler_284y = NBodyGraphPlotting(euler_data)
-test_set_verlet = NBodyGraphPlotting(verlet_data)
+raw_datasets = [np.load(new_path + "/data_files" + i, allow_pickle=True) for i in filenames]  # list of raw datasets
+graph_objects = [NBodyGraphPlotting(i) for i in raw_datasets]
 
-# print(test_set_verlet.labels)
-energy_tests(test_set_verlet, years)
-# test_set_verlet.totalLinearMomentum()
-# test_set_verlet.percentageLinearMomentum()
-# plt.legend()
-# plt.show()
+for i, n in enumerate(filenames):
+    energy_tests(graph_objects[i], n)

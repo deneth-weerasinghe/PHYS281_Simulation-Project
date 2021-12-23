@@ -59,9 +59,9 @@ class NBodyGraphPlotting:
                 z_list.append(j[i].position[2])
             plt.plot(x_list, y_list, z_list, label=self.labels[i - 1])
 
-        ax.set_xlabel("x-axis (m)")
-        ax.set_ylabel("y-axis (m)")
-        ax.set_zlabel("z-axis (m)")
+        ax.set_xlabel("x-position (m)")
+        ax.set_ylabel("y-position (m)")
+        ax.set_zlabel("z-position (m)")
         ax.set_title(title)
         plt.legend()
         plt.show()
@@ -108,14 +108,15 @@ class NBodyGraphPlotting:
         y2_values = [(u_e_list[0] - i) * 100 / u_e_list[0] for i in u_e_list]
         y3_values = [(tot_energy[0] - i) * 100 / tot_energy[0] for i in tot_energy]
 
-        plt.plot(self.times, y1_values, "--", label="Kinetic energy")
-        plt.plot(self.times, y2_values, "--", label="Potential energy")
-        plt.plot(self.times, y3_values, label="Total energy", color="r")
+        # plt.plot(self.times, y1_values, "--", label="Kinetic energy")
+        # plt.plot(self.times, y2_values, "--", label="Potential energy")
+        # plt.plot(self.times, y3_values, label="Total energy", color="r")
 
-        print(sum(y1_values) / len(y1_values))
-        plt.xlabel("Time (s)")
-        plt.ylabel("Percentage error")
-        plt.title("Percentage error in energy")
+        y3_values = [abs(i) for i in y3_values]
+        print(sum(y3_values) / len(y3_values))
+        # plt.xlabel("Time (s)")
+        # plt.ylabel("Percentage error")
+        # plt.title("Percentage error in energy")
 
     def totalLinearMomentum(self):
         """

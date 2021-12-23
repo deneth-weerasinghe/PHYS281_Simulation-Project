@@ -44,10 +44,14 @@ print(max(y))
 print(len(times))
 
 # plot the data
-fig = plt.figure()
+fig = plt.figure(figsize=[5, 5])
+param = {"font.size": 15}
+plt.rcParams.update(param)
 plt.plot(times, y, "-r", label='trajectory')
-plt.xlabel('time (s)')
+plt.xlabel('x-position (m)')
 plt.ylabel('y-position (m)')
+plt.title("Projectile motion under Earth's gravity, g=-10 ms$^{-1}$\n")
+plt.tight_layout()
 plt.legend()
 plt.show()
 fig.savefig(path + "/proj_motion.png")

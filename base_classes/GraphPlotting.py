@@ -32,12 +32,12 @@ class GraphPlotting:
         plt.xlabel('time (s)')
         plt.ylabel('position')
 
-    def draw2DPositionGraph(self, label="Trajectory in x-y plane"):
+    def draw2DPositionGraph(self, label="Trajectory in x-y plane", color=None):
         """
         Draws the particle's y-positions against its x-positions i.e. the x-y plane
         :param: label: string label to input into the plot function
         """
-        plt.plot(self.x, self.y, label=label)
+        plt.plot(self.x, self.y, label=label, color=color)
 
     def draw3DPositionGraph(self, axes, label="Trajectory in 3D space"):
         """

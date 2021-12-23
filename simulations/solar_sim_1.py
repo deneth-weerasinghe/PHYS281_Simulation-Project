@@ -61,16 +61,16 @@ time_step = 86400
 method key argument specifies which method to use to update the position of the object
 method: [0, 1, 2, 3] for Euler, Euler-Cromer, Euler-Richardson, Verlet, method = 0 by default
 """
-generate_data(time_step, 365 * 10, solar_objects, "/10y_euler")  # 10 year simulation with Euler
-
-# high time step, low iterations
-generate_data(time_step * 31, int(248 / 8), solar_objects, "/248y_euler_high")
-generate_data(time_step * 31, int(248 / 8), solar_objects, "/248y_euler_cromer_high", method=1)
-generate_data(time_step * 31, int(248 / 8), solar_objects, "/248y_euler_richardson_high", method=2)
-generate_data(time_step * 31, int(248 / 8), solar_objects, "/248y_verlet_high", method=3)
+# generate_data(time_step, 365 * 10, solar_objects, "/10y_euler")  # 10 year simulation with Euler
 
 # low time step, high iterations
-generate_data(time_step * 8, int(248 / 31), solar_objects, "/248y_euler")
-generate_data(time_step * 8, int(248 / 31), solar_objects, "/248y_euler_cromer", method=1)
-generate_data(time_step * 8, int(248 / 31), solar_objects, "/248y_euler_richardson", method=2)
-generate_data(time_step * 8, int(248 / 31), solar_objects, "/248y_verlet", method=3)
+generate_data(time_step * 8, int(365 * 248 / 8), solar_objects, "/248y_euler_high")
+generate_data(time_step * 8, int(365 * 248 / 8), solar_objects, "/248y_euler_cromer_high", method=1)
+generate_data(time_step * 8, int(365 * 248 / 8), solar_objects, "/248y_euler_richardson_high", method=2)
+generate_data(time_step * 8, int(365 * 248 / 8), solar_objects, "/248y_verlet_high", method=3)
+
+# high time step, low iterations
+generate_data(time_step * 31, int(365 * 248 / 31), solar_objects, "/248y_euler")
+generate_data(time_step * 31, int(365 * 248 / 31), solar_objects, "/248y_euler_cromer", method=1)
+generate_data(time_step * 31, int(365 * 248 / 31), solar_objects, "/248y_euler_richardson", method=2)
+generate_data(time_step * 31, int(365 * 248 / 31), solar_objects, "/248y_verlet", method=3)
