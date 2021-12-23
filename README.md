@@ -22,9 +22,7 @@ It contains methods that update position, velocity and acceleration.
 ### data_files
 Subdirectory for storing all data files containing generated data from various simulations.
 ### out
-Output subdirectory for LaTex
-###### report.pdf
-The report detailing and documenting the results and process of the simulation, as well as references.
+Output subdirectory for LaTex and BibTex.
 ### simulations
 Simulation files that generate data and then save them as binary numpy files for later use.
 ###### compare_methods.py
@@ -38,3 +36,23 @@ A simple simulation for testing out a two body system, used for the Moodle exerc
 ### tests
 Subdirectory holding all test files i.e. files that output data in the terminal or output plots.  
 The data has been saved by the simulation files so all the test files extract already generated data.
+#### exercise
+Subdirectory that holds all tests relating to the exercises for the project set in the Moodle page.
+###### exercise_1_2.py
+Test file for generating the projectile motion plot to be used in the report.
+#### indev
+"In development"; holds all the remaining tests, including some unit tests as well as the final tests.
+###### compare_methods_test.py
+Plots 4 identical satellites orbiting Earth with the same initial conditions, only differing in the numerical method used.
+###### different_methods_test.py
+Only plots 2 satellites, one using Euler and the other using Euler-Cromer.
+###### ephemerides_test.py
+Testing to get used to retrieving data from JPL.
+###### indev_tests.py
+Miscelleneous testing.
+###### solar_sim_tests.py
+The main testing file used to generate all solar system plots, in both 3D and 2D as well as energy and momentum plots.
+###### three_body_test.py
+A simple 3 body test consisting of the Earth and 2 satellites.
+###### two_body_test.py
+A simple 2 body test consisting of the Earth and a single satellite.
