@@ -23,13 +23,15 @@ It contains methods that update position, velocity and acceleration.
 Subdirectory for storing all data files containing generated data from various simulations.
 ### out
 Output subdirectory for LaTex and BibTex.
+### plots
+Storage location for image files of every plot generated.
 ### simulations
 Simulation files that generate data and then save them as binary numpy files for later use.
 ###### compare_methods.py
 Simulates the differences between each of the updating methods: Euler, Euler-Cromer, Euler-Richardson and Verlet by modelling the same object 4 times.
 ###### solar_sim_1.py
 The main simulation for the report, consisting of simulating the solar system, consisting of the Sun, the planets and Pluto.
-###### three_bodies_sim.py
+###### five_bodies_sim.py
 A simple simulation for testing out a three body system.
 ###### two_bodies_sim.py
 A simple simulation for testing out a two body system, used for the Moodle exercises.
@@ -52,7 +54,7 @@ Testing to get used to retrieving data from JPL.
 Miscelleneous testing.
 ###### solar_sim_tests.py
 The main testing file used to generate all solar system plots, in both 3D and 2D as well as energy and momentum plots.
-###### three_body_test.py
+###### five_body_test.py
 A simple 3 body test consisting of the Earth and 2 satellites.
 ###### two_body_test.py
 A simple 2 body test consisting of the Earth and a single satellite.

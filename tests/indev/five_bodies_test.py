@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from base_classes.GraphPlotting import GraphPlotting
 
-new_path = os.path.join(os.path.dirname(os.getcwd()), "data_files")
-
+new_path = os.path.dirname(os.path.dirname(os.getcwd()))
+fig = plt.figure()
 
 def retrieve_data(file):
     raw_data = np.load(new_path + file, allow_pickle=True)
@@ -33,6 +33,7 @@ def plot_paths(data, labels):
     plt.show()
 
 
-dataset, names = retrieve_data("/three_body_test.npy")
-print(names)
+dataset, names = retrieve_data("/data_files/three_body_test.npy")  # incorrectly named, should be "five" not "three"
 plot_paths(dataset, names)
+
+fig.savefig(new_path + "/plots/five_bodies.png")
