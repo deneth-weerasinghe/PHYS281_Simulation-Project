@@ -3,7 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from base_classes.GraphPlotting import GraphPlotting
 
-new_path = os.path.join(os.path.dirname(os.path.dirname(os.getcwd())), "data_files")
+new_path = os.path.dirname(os.path.dirname(os.getcwd()))
+fig = plt.figure()
 
 
 def retrieve_data(file):
@@ -16,7 +17,6 @@ def retrieve_data(file):
     raw_data = np.load(new_path + file, allow_pickle=True)
     processed_data = []
     labels = []
-    # print(raw_data[0][3])
     for i in raw_data:
         temp = []
         for j in range(0, len(i)):
@@ -45,7 +45,6 @@ def plot_paths(data, labels):
     plt.show()
 
 
-dataset, names = retrieve_data("/method_test_data.npy")
+dataset, names = retrieve_data("/data_files/method_test_data.npy")
 plot_paths(dataset, names)
-
-
+fig.savefig(new_path + "/plots/different_methods.png")
