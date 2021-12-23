@@ -51,7 +51,7 @@ Only plots 2 satellites, one using Euler and the other using Euler-Cromer.
 ###### ephemerides_test.py
 Testing to get used to retrieving data from JPL.
 ###### indev_tests.py
-Miscelleneous testing.
+Miscellaneous testing.
 ###### solar_sim_tests.py
 The main testing file used to generate all solar system plots, in both 3D and 2D as well as energy and momentum plots.
 ###### five_body_test.py
